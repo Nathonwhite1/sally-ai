@@ -1,0 +1,32 @@
+﻿<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Sally Admin - Leads</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 16px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border-bottom: 1px solid #ddd; padding: 8px; text-align: left; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+  <h2>Leads</h2>
+  <p>Bookmark: <code>/admin/leads?pw=YOURPASS</code></p>
+  <table>
+    <tr>
+      <th>ID</th><th>Status</th><th>Type</th><th>Address</th><th>Timeline</th><th>Created</th>
+    </tr>
+    {% for l in leads %}
+    <tr>
+      <td><a href="/admin/leads/{{l.id}}?pw={{pw}}">{{l.id}}</a></td>
+      <td>{{l.status}}</td>
+      <td>{{l.project_type}}</td>
+      <td>{{l.address or (l.intake_data.get('address_raw') if l.intake_data else '')}}</td>
+      <td>{{l.timeline}}</td>
+      <td>{{l.created_at}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

@@ -1,0 +1,240 @@
+﻿from fastapi.responses import PlainTextResponse, HTMLResponse, JSONResponse
+from fastapi import Body
+import re
+from fastapi import FastAPI, Request, Form, Depends, HTTPException
+
+        if ($existing -notmatch "JSONResponse") {
+            "from fastapi.responses import $existing, JSONResponse"
+    
+, JSONResponse
+from fastapi.templating import Jinja2Templates
+from sqlalchemy import select, desc
+from sqlalchemy.orm import Session
+from dotenv import load_dotenv
+import os
+
+def escape_xml(s: str) -> str:
+    return (
+        (s or "")
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+        .replace("'", "&apos;")
+    )
+from .db import SessionLocal, init_db
+from .models import Customer, Lead, Message, Proposal
+from .sally_logic import sally_next_message_and_update_state
+from .proposal_engine import generate_proposal_and_pdf
+
+load_dotenv()
+
+app = FastAPI(title="Sally AI")
+templates = Jinja2Templates(directory="app/templates")
+
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "change-me")
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+@app.on_event("startup")
+def on_startup():
+    init_db()
+
+def require_admin(password: str | None):
+    if not password or password != ADMIN_PASSWORD:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+@app.get("/", response_class=HTMLResponse)
+def home():
+    return HTMLResponse("<a href='/admin/leads?pw=...'>Go to Admin</a>")
+
+@app.post("/sms", response_class=PlainTextResponse)
+async def sms_webhook(
+    request: Request,
+    From: str = Form(...),
+    Body: str = Form(...),
+    db: Session = Depends(get_db),
+):
+    phone = From.strip()
+    body = (Body or "").strip()
+
+    customer = db.scalar(select(Customer).where(Customer.phone == phone))
+    if not customer:
+        customer = Customer(phone=phone, name=None, email=None)
+        db.add(customer)
+        db.commit()
+        db.refresh(customer)
+
+    lead = db.scalar(
+        select(Lead)
+        .where(Lead.customer_id == customer.id, Lead.status.in_(["new", "in_progress"]))
+        .order_by(desc(Lead.created_at))
+    )
+    if not lead:
+        lead = Lead(
+            customer_id=customer.id,
+            status="new",
+            project_type=None,
+            address=None,
+            city=None,
+            timeline=None,
+            occupied=None,
+            access_notes=None,
+            intake_stage="stage1",
+            intake_data={},
+        )
+        db.add(lead)
+        db.commit()
+        db.refresh(lead)
+
+    db.add(Message(lead_id=lead.id, direction="in", body=body))
+    db.commit()
+
+    reply = sally_next_message_and_update_state(db, lead, body)
+
+    db.add(Message(lead_id=lead.id, direction="out", body=reply))
+    db.commit()
+    twiml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Message>{escape_xml(reply)}</Message>
+</Response>"""
+
+    return PlainTextResponse(twiml, media_type="application/xml")
+
+
+@app.get("/admin/leads", response_class=HTMLResponse)
+def admin_leads(request: Request, pw: str | None = None, db: Session = Depends(get_db)):
+    require_admin(pw)
+    leads = db.scalars(select(Lead).order_by(desc(Lead.created_at))).all()
+    return templates.TemplateResponse("leads.html", {"request": request, "leads": leads, "pw": pw})
+
+@app.get("/admin/leads/{lead_id}", response_class=HTMLResponse)
+def admin_lead_detail(request: Request, lead_id: int, pw: str | None = None, db: Session = Depends(get_db)):
+    require_admin(pw)
+    lead = db.get(Lead, lead_id)
+    if not lead:
+        raise HTTPException(404, "Lead not found")
+    msgs = db.scalars(select(Message).where(Message.lead_id == lead_id).order_by(Message.created_at)).all()
+    cust = db.get(Customer, lead.customer_id)
+    return templates.TemplateResponse(
+        "lead_detail.html",
+    )
+
+@app.post("/admin/leads/{lead_id}/proposal")
+def admin_generate_proposal(lead_id: int, pw: str = Form(...), db: Session = Depends(get_db)):
+    require_admin(pw)
+    lead = db.get(Lead, lead_id)
+    if not lead:
+        raise HTTPException(404, "Lead not found")
+
+    proposal = generate_proposal_and_pdf(db, lead)
+    return RedirectResponse(url=f"/admin/proposals/{proposal.id}.pdf?pw={pw}", status_code=303)
+
+@app.get("/admin/proposals/{proposal_id}.pdf")
+def admin_download_proposal(proposal_id: int, pw: str | None = None, db: Session = Depends(get_db)):
+    require_admin(pw)
+    proposal = db.get(Proposal, proposal_id)
+    if not proposal or not proposal.pdf_path:
+        raise HTTPException(404, "Proposal not found")
+    return FileResponse(proposal.pdf_path, media_type="application/pdf", filename=f"proposal-{proposal_id}.pdf")
+
+@app.post("/web/lead")
+def web_lead(payload: dict = Body(...), db: Session = Depends(get_db)):
+    """
+    Receives lead data from your landing page form.
+    Creates/updates Customer + creates/updates an in-progress Lead.
+    """
+
+    def clean_phone(p: str) -> str:
+        p = (p or "").strip()
+        digits = re.sub(r"\D+", "", p)
+        if len(digits) == 10:
+            return "+1" + digits
+        if len(digits) == 11 and digits.startswith("1"):
+            return "+" + digits
+        if p.startswith("+"):
+            return p
+        return "+1" + digits if digits else ""
+
+    first_name = (payload.get("first_name") or "").strip()
+    phone = clean_phone(payload.get("phone") or "")
+    address = (payload.get("address") or "").strip()
+    city = (payload.get("city") or "").strip()
+    project_type = (payload.get("project_type") or "").strip()
+    notes = (payload.get("notes") or "").strip()
+
+    if not phone or not address or not city or not project_type:
+        return JSONResponse({"ok": False, "error": "Missing required fields."}, status_code=400)
+
+    # Customer
+    customer = db.scalar(select(Customer).where(Customer.phone == phone))
+    if not customer:
+        customer = Customer(phone=phone, name=first_name or None, email=None)
+        db.add(customer)
+        db.commit()
+        db.refresh(customer)
+    else:
+        if first_name and not getattr(customer, "name", None):
+            customer.name = first_name
+            db.add(customer)
+            db.commit()
+
+    # Active lead or new lead
+    lead = db.scalar(
+        select(Lead)
+        .where(Lead.customer_id == customer.id, Lead.status.in_(["new", "in_progress"]))
+        .order_by(desc(Lead.created_at))
+    )
+
+    if not lead:
+        lead = Lead(
+            customer_id=customer.id,
+            status="new",
+            project_type=project_type,
+            address=address,
+            city=city,
+            timeline=None,
+            occupied=None,
+            access_notes=None,
+            intake_stage="stage1",
+            intake_data={"notes": notes} if notes else {},
+        )
+        db.add(lead)
+        db.commit()
+        db.refresh(lead)
+    else:
+        lead.project_type = lead.project_type or project_type
+        lead.address = lead.address or address
+        lead.city = lead.city or city
+        if notes:
+            d = lead.intake_data or {}
+            d["notes"] = notes
+            lead.intake_data = d
+        if lead.status == "new":
+            lead.status = "in_progress"
+        db.add(lead)
+        db.commit()
+        db.refresh(lead)
+
+    # Log web submission
+    summary = f"[WEB FORM] {project_type} — {address}, {city}."
+    if notes:
+        summary += f" Notes: {notes}"
+    db.add(Message(lead_id=lead.id, direction="in", body=summary))
+    db.commit()
+
+    # Kick Sally logic (stores next step)
+    reply = sally_next_message_and_update_state(db, lead, "web_form_submitted")
+    db.add(Message(lead_id=lead.id, direction="out", body=reply))
+    db.commit()
+
+    return {"ok": True, "lead_id": lead.id, "next_text": reply}
+
+
+
+
