@@ -1,6 +1,4 @@
-﻿
-
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -8,6 +6,7 @@
   <title>White’s Painting & Renovations | Ukiah, CA | Free Estimates</title>
   <meta name="description" content="White’s Painting & Renovations in Ukiah, CA. Interior/exterior painting, cabinets, drywall, flooring, remodel support. Free estimates. Financing available." />
 
+  <!-- Optional: social preview -->
   <meta property="og:title" content="White’s Painting & Renovations" />
   <meta property="og:description" content="Free estimates • Financing available • Ukiah, CA" />
   <meta property="og:type" content="website" />
@@ -42,6 +41,10 @@
       overflow-x:hidden;
     }
 
+    /* ===== BACKGROUND =====
+      Best: put a photo at /static/bg.jpg and set url("/static/bg.jpg")
+      Or use any public https image URL.
+    */
     .bg{
       position:fixed;
       inset:0;
@@ -67,6 +70,7 @@
       padding: 18px 16px 80px;
     }
 
+    /* ===== NAV ===== */
     .nav{
       position: sticky;
       top: 12px;
@@ -172,6 +176,7 @@
     }
     .mobileMenu a:last-child{ margin-bottom: 0; }
 
+    /* ===== 3D BUTTONS ===== */
     .btn{
       appearance:none;
       border:1px solid rgba(255,255,255,0.18);
@@ -214,6 +219,7 @@
       border-color: rgba(255,255,255,.16);
     }
 
+    /* ===== SECTIONS ===== */
     section{ margin-top: 18px; }
     .panel{
       border-radius: var(--radius);
@@ -316,6 +322,7 @@
     .stat strong{ display:block; font-size: 16px; margin-bottom: 4px; }
     .stat span{ color: var(--muted); font-size: 12px; }
 
+    /* ===== FORM ===== */
     .formTitle{ margin:0 0 6px; font-size: 18px; letter-spacing:.2px; }
     .formSub{ margin:0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.45; }
 
@@ -360,6 +367,7 @@
       line-height: 1.4;
     }
 
+    /* ===== SECTION HEADERS ===== */
     .sectionHead{
       display:flex;
       align-items:flex-end;
@@ -383,6 +391,7 @@
       .sectionHead{ flex-direction:column; align-items:flex-start; }
     }
 
+    /* ===== CARDS ===== */
     .cards4{
       display:grid;
       grid-template-columns: repeat(4, 1fr);
@@ -408,6 +417,7 @@
     }
     @media (max-width: 900px){ .cards3{ grid-template-columns:1fr; } }
 
+    /* ===== GALLERY ===== */
     .gallery{
       display:grid;
       grid-template-columns: 1.2fr .8fr;
@@ -426,6 +436,7 @@
       letter-spacing:.3px;
     }
 
+    /* ===== FAQ ===== */
     details{
       border-radius: 18px;
       border:1px solid rgba(255,255,255,.12);
@@ -441,6 +452,7 @@
     summary::-webkit-details-marker{ display:none; }
     details p{ color: var(--muted); margin: 10px 0 0; font-size: 13px; line-height: 1.55; }
 
+    /* ===== FOOTER ===== */
     footer{
       margin-top: 18px;
       text-align:center;
@@ -456,6 +468,7 @@
   <div class="bg" aria-hidden="true"></div>
 
   <div class="wrap">
+    <!-- NAV -->
     <div class="nav">
       <div class="brand">
         <div class="logo" aria-hidden="true">
@@ -476,7 +489,7 @@
         <a href="#areas">Service Area</a>
         <a href="#faq">FAQ</a>
         <a href="#estimate">Estimate</a>
-        <a href="tel:+17073501569">Call</a>
+        <a href="tel:+17078516910">Call</a>
       </div>
     </div>
 
@@ -487,9 +500,10 @@
       <a href="#areas">Service Area</a>
       <a href="#faq">FAQ</a>
       <a href="#estimate">Get Estimate</a>
-      <a href="tel:+17073501569">Call (707) 350-1569</a>
+      <a href="tel:+17078516910">Call (707) 851-6910</a>
     </div>
 
+    <!-- HERO + FORM -->
     <section class="hero" id="top">
       <div class="panel heroLeft">
         <div class="kicker"><span class="dot"></span> Clean work • Clear pricing • Fast scheduling</div>
@@ -508,8 +522,8 @@
 
         <div class="ctaRow">
           <a class="btn btn-primary" href="#estimate">Get a Free Estimate</a>
-          <a class="btn btn-ghost" href="sms:+17073501569?body=Hi%20Sally%20—%20I%20need%20an%20estimate.">Text Sally</a>
-          <a class="btn btn-ghost" href="tel:+17073501569">Call Now</a>
+          <a class="btn btn-ghost" href="sms:+17078516910?body=Hi%20Sally%20—%20I%20need%20an%20estimate.">Text Sally</a>
+          <a class="btn btn-ghost" href="tel:+17078516910">Call Now</a>
         </div>
 
         <div class="stats">
@@ -563,7 +577,7 @@
 
           <div class="ctaRow" style="margin-top:14px;">
             <button class="btn btn-primary" type="submit">Submit Request</button>
-            <a class="btn btn-ghost" href="tel:+17073501569">Call Instead</a>
+            <a class="btn btn-ghost" href="tel:+17078516910">Call Instead</a>
           </div>
 
           <div class="result" id="result"></div>
@@ -606,7 +620,7 @@
       </div>
     </section>
 
-    <!-- GALLERY -->
+    <!-- GALLERY (placeholders) -->
     <section class="panel" id="gallery">
       <div class="sectionHead">
         <div>
@@ -720,6 +734,7 @@
       </details>
     </section>
 
+    <!-- CONTACT -->
     <section class="panel" id="contact">
       <div class="sectionHead">
         <div>
@@ -727,15 +742,15 @@
           <p>Call or text anytime — or submit the form above and we’ll reach out.</p>
         </div>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn btn-primary" href="tel:+17073501569">Call (707) 350-1569</a>
-          <a class="btn btn-ghost" href="sms:+17073501569?body=Hi%20Sally%20—%20I%20need%20an%20estimate.">Text Sally</a>
+          <a class="btn btn-primary" href="tel:+17078516910">Call (707) 350-1569</a>
+          <a class="btn btn-ghost" href="sms:+17078516910?body=Hi%20Sally%20—%20I%20need%20an%20estimate.">Text Sally</a>
         </div>
       </div>
 
       <div class="cards3">
         <div class="card">
           <strong>Phone</strong>
-          <p><a href="tel:+17073501569" style="color:rgba(234,240,255,.92);text-decoration:none;">(707) 350-1569</a></p>
+          <p><a href="tel:+17078516910" style="color:rgba(234,240,255,.92);text-decoration:none;">(707) 851-6910</a></p>
         </div>
         <div class="card">
           <strong>Location</strong>
@@ -757,18 +772,21 @@
   </div>
 
   <script>
+    // Year
     document.getElementById("yr").textContent = new Date().getFullYear();
 
+    // Mobile menu toggle
     const menuBtn = document.getElementById("menuBtn");
     const mobileMenu = document.getElementById("mobileMenu");
     menuBtn?.addEventListener("click", () => {
       const isOpen = mobileMenu.style.display === "block";
       mobileMenu.style.display = isOpen ? "none" : "block";
     });
+    // close on click
     mobileMenu?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mobileMenu.style.display="none"));
 
     // Lead form submit
-    const API_URL = "/web/lead"; // same domain
+    const API_URL = "/web/lead"; // if same domain. If different, set to full https URL.
 
     function showResult(msg, ok=true){
       const el = document.getElementById("result");
@@ -794,8 +812,6 @@
         return;
       }
 
-      showResult("Submitting…", true);
-
       try {
         const res = await fetch(API_URL, {
           method: "POST",
@@ -805,14 +821,14 @@
 
         const data = await res.json().catch(()=>({}));
 
-        if (res.ok && (data.ok === true || data.ok === undefined)) {
-          showResult("✅ Thank you! Sally will text you shortly to schedule your estimate.", true);
+        if (res.ok && data.ok !== false) {
+          showResult("Thank you! Sally will text you shortly to schedule your estimate.");
           e.target.reset();
         } else {
-          showResult(data?.error || "Something went wrong. Please try again or call (707) 350-1569.", false);
+          showResult(data?.error || "Something went wrong. Please try again or call (707) 851-6910.", false);
         }
       } catch (err) {
-        showResult("Network error. Please try again or call (707) 350-1569.", false);
+        showResult("Network error. Please try again or call (707) 851-6910.", false);
       }
     });
   </script>
