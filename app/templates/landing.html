@@ -1,482 +1,818 @@
-﻿<!doctype html>
+﻿
+
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>White’s Painting & Renovations — Free Estimate</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>White’s Painting & Renovations | Ukiah, CA | Free Estimates</title>
+  <meta name="description" content="White’s Painting & Renovations in Ukiah, CA. Interior/exterior painting, cabinets, drywall, flooring, remodel support. Free estimates. Financing available." />
+
+  <meta property="og:title" content="White’s Painting & Renovations" />
+  <meta property="og:description" content="Free estimates • Financing available • Ukiah, CA" />
+  <meta property="og:type" content="website" />
 
   <style>
     :root{
-      --bg1:#0b1220;
-      --bg2:#0f1b33;
-      --card: rgba(255,255,255,.08);
-      --card2: rgba(255,255,255,.12);
-      --stroke: rgba(255,255,255,.16);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.72);
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --bg:#070A0F;
+      --text:#EAF0FF;
+      --muted:rgba(234,240,255,.72);
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.10);
+      --stroke:rgba(255,255,255,.14);
+      --shadow:0 22px 70px rgba(0,0,0,.50);
+      --radius:22px;
 
-      --brandA:#fbbf24; /* amber */
-      --brandB:#f59e0b;
+      --brand:#35C7FF;
+      --brand2:#7C4DFF;
+      --accent:#00FFA8;
+      --danger:#FF4D6D;
+
+      --max:1160px;
     }
 
     *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    html{ scroll-behavior:smooth; }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
+      background: var(--bg);
       color: var(--text);
-      min-height:100vh;
+      overflow-x:hidden;
+    }
 
-      /* ✅ If you want your uploaded image as background:
-         Put your image in /app/static/bg.png and use: url("/static/bg.png")
-      */
+    .bg{
+      position:fixed;
+      inset:0;
+      z-index:-2;
       background:
-        radial-gradient(1100px 600px at 10% 10%, rgba(99,102,241,.35), transparent 55%),
-        radial-gradient(900px 520px at 90% 15%, rgba(56,189,248,.25), transparent 55%),
-        radial-gradient(900px 520px at 55% 100%, rgba(34,197,94,.18), transparent 55%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
+        radial-gradient(1100px 900px at 15% 10%, rgba(53,199,255,.22), transparent 60%),
+        radial-gradient(900px 700px at 85% 18%, rgba(124,77,255,.22), transparent 55%),
+        radial-gradient(900px 900px at 50% 92%, rgba(0,255,168,.12), transparent 60%),
+        url("/static/bg.jpg") center/cover no-repeat fixed;
+      filter:saturate(1.12) contrast(1.05);
     }
-
-    /* Optional background image overlay (uncomment when you add /static/bg.png)
-    body::before{
+    .bg::after{
       content:"";
-      position:fixed; inset:0;
-      background: url("/static/bg.png") no-repeat center center fixed;
-      background-size: cover;
-      opacity: .18;
-      pointer-events:none;
-      filter: saturate(1.1) contrast(1.05);
-      mix-blend-mode: screen;
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(7,10,15,.78), rgba(7,10,15,.92));
+      z-index:1;
     }
-    */
 
     .wrap{
-      max-width: 1050px;
+      max-width: var(--max);
       margin: 0 auto;
-      padding: 34px 18px 70px;
-      position:relative;
+      padding: 18px 16px 80px;
     }
 
-    .topbar{
+    .nav{
+      position: sticky;
+      top: 12px;
+      z-index: 60;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
-      margin-bottom: 18px;
-      flex-wrap:wrap;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 70px rgba(0,0,0,.35);
     }
 
     .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width: 280px;
+      display:flex; align-items:center; gap:12px;
+      min-width: 240px;
     }
-
     .logo{
       width:44px; height:44px;
       border-radius: 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-      border: 1px solid var(--stroke);
-      display:flex; align-items:center; justify-content:center;
-      box-shadow: 0 18px 50px rgba(0,0,0,.35);
-      font-weight: 900;
-      letter-spacing:.5px;
+      background: linear-gradient(135deg, rgba(53,199,255,.95), rgba(124,77,255,.95));
+      border: 1px solid rgba(255,255,255,.22);
+      box-shadow: 0 18px 44px rgba(53,199,255,.20);
+      display:grid; place-items:center;
+      flex:0 0 auto;
     }
+    .logo svg{ width:24px; height:24px; fill:#fff; opacity:.95; }
 
-    .brand h2{
-      margin:0;
-      font-size: 15px;
+    .brand .title{
+      line-height:1.12;
+    }
+    .brand .title strong{
+      display:block;
+      font-size: 14px;
       letter-spacing:.2px;
-      line-height:1.1;
     }
-    .brand p{
-      margin:2px 0 0;
+    .brand .title span{
+      display:block;
+      font-size: 12px;
       color: var(--muted);
-      font-size: 12.5px;
     }
 
-    .pill{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
+    .navlinks{
+      display:flex; gap: 10px; align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .navlinks a{
+      color: rgba(234,240,255,.9);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing:.2px;
       padding: 10px 12px;
       border-radius: 999px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.14);
-      backdrop-filter: blur(8px);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      text-decoration:none;
+      transition: transform .12s ease, background .12s ease;
+    }
+    .navlinks a:hover{ background: rgba(255,255,255,.08); transform: translateY(-1px); }
+
+    .menuBtn{
+      display:none;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-weight: 800;
+      cursor:pointer;
+    }
+
+    @media (max-width: 900px){
+      .nav{ border-radius: 18px; }
+      .navlinks{ display:none; }
+      .menuBtn{ display:inline-flex; align-items:center; gap:8px; }
+      .brand{ min-width:auto; }
+    }
+
+    .mobileMenu{
+      display:none;
+      margin-top: 10px;
+      border-radius: 18px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 70px rgba(0,0,0,.35);
+      padding: 10px;
+    }
+    .mobileMenu a{
+      display:block;
+      padding: 12px 12px;
+      border-radius: 14px;
+      color: rgba(234,240,255,.92);
+      text-decoration:none;
+      font-weight:800;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      margin-bottom: 8px;
+    }
+    .mobileMenu a:last-child{ margin-bottom: 0; }
+
+    .btn{
+      appearance:none;
+      border:1px solid rgba(255,255,255,0.18);
+      padding: 13px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      font-weight: 900;
       font-size: 13px;
-      color: rgba(255,255,255,.85);
+      letter-spacing:.2px;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+      box-shadow:
+        0 10px 0 rgba(0,0,0,.26),
+        0 22px 50px rgba(0,0,0,.45);
+      transform: translateY(-2px);
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{ filter: brightness(1.04); transform: translateY(-3px); }
+    .btn:active{
+      transform: translateY(2px);
+      box-shadow:
+        0 4px 0 rgba(0,0,0,.26),
+        0 16px 30px rgba(0,0,0,.35);
+    }
+    .btn-primary{
+      border-color: rgba(53,199,255,.38);
+      background: linear-gradient(135deg, rgba(53,199,255,.95), rgba(124,77,255,.95));
+      box-shadow:
+        0 10px 0 rgba(0,0,0,.26),
+        0 22px 55px rgba(53,199,255,.25);
+    }
+    .btn-ghost{
+      background: rgba(0,0,0,.22);
+      border-color: rgba(255,255,255,.16);
+    }
+
+    section{ margin-top: 18px; }
+    .panel{
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      padding: 22px;
     }
 
     .hero{
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 18px;
-      align-items: stretch;
-      margin-top: 12px;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      align-items:stretch;
+      margin-top: 16px;
     }
-    @media (max-width: 900px){
-      .hero{ grid-template-columns:1fr; }
-    }
+    @media (max-width: 900px){ .hero{ grid-template-columns:1fr; } }
 
-    .panel{
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-      border: 1px solid var(--stroke);
-      border-radius: 22px;
-      box-shadow: var(--shadow);
-      overflow:hidden;
+    .heroLeft{
       position:relative;
+      overflow:hidden;
     }
-    .panel::before{
+    .heroLeft::before{
       content:"";
       position:absolute;
-      inset:-2px;
-      background: radial-gradient(700px 240px at 30% 0%, rgba(255,255,255,.16), transparent 55%);
+      inset:-120px;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(53,199,255,.18), transparent 55%),
+        radial-gradient(circle at 85% 20%, rgba(124,77,255,.18), transparent 55%),
+        radial-gradient(circle at 40% 95%, rgba(0,255,168,.10), transparent 55%);
+      transform: rotate(5deg);
       pointer-events:none;
     }
-    .panel-inner{
-      padding: 22px;
-      position:relative;
-      z-index:1;
-    }
+    .heroLeft > *{ position:relative; }
 
-    h1{
-      margin: 0 0 10px;
-      font-size: clamp(30px, 3.4vw, 44px);
-      letter-spacing: -0.02em;
-      line-height: 1.05;
-    }
-    .sub{
-      margin:0 0 14px;
-      color: var(--muted);
-      font-size: 15.5px;
-      line-height:1.5;
-    }
-
-    .badges{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin: 14px 0 0;
-    }
-    .badge{
+    .kicker{
       display:inline-flex;
       align-items:center;
-      gap:8px;
+      gap:10px;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.14);
-      font-size: 13px;
-      color: rgba(255,255,255,.82);
+      background: rgba(0,0,0,.20);
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(0,255,168,.60);
     }
 
-    /* 3D Button */
-    .btn3d{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      border:0;
-      cursor:pointer;
-      padding: 14px 16px;
-      border-radius: 14px;
-      color: #1a1204;
-      font-weight: 900;
-      letter-spacing: .2px;
-      background: linear-gradient(180deg, var(--brandA), var(--brandB));
-      box-shadow:
-        0 12px 0 rgba(0,0,0,.28),
-        0 18px 30px rgba(0,0,0,.35),
-        inset 0 1px 0 rgba(255,255,255,.55);
-      transform: translateY(0);
-      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
-      user-select:none;
-      width: 100%;
+    .headline{
+      font-size: clamp(34px, 4.6vw, 58px);
+      line-height: 1.05;
+      margin: 0 0 10px;
+      letter-spacing: -0.9px;
     }
-    .btn3d:hover{ filter: brightness(1.03); }
-    .btn3d:active{
-      transform: translateY(10px);
-      box-shadow:
-        0 2px 0 rgba(0,0,0,.28),
-        0 8px 16px rgba(0,0,0,.35),
-        inset 0 1px 0 rgba(255,255,255,.45);
+    .headline .grad{
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
+    .subhead{
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+      max-width: 62ch;
     }
 
-    .btnGhost{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
+    .pillRow{ display:flex; flex-wrap:wrap; gap:10px; margin: 10px 0 16px; }
+    .pill{
+      padding: 9px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.20);
+      font-size: 12px;
+      color: rgba(234,240,255,.86);
+    }
+
+    .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top: 8px; }
+
+    .stats{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+    @media (max-width: 520px){ .stats{ grid-template-columns:1fr; } }
+    .stat{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.20);
       padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.16);
-      color: rgba(255,255,255,.92);
-      font-weight: 800;
-      cursor:pointer;
-      box-shadow: 0 16px 40px rgba(0,0,0,.22);
-      transition: transform .12s ease, background .12s ease;
-      width: 100%;
     }
-    .btnGhost:hover{ background: rgba(255,255,255,.10); transform: translateY(-1px); }
-    .btnGhost:active{ transform: translateY(1px); }
+    .stat strong{ display:block; font-size: 16px; margin-bottom: 4px; }
+    .stat span{ color: var(--muted); font-size: 12px; }
+
+    .formTitle{ margin:0 0 6px; font-size: 18px; letter-spacing:.2px; }
+    .formSub{ margin:0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.45; }
 
     .grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 10px;
     }
-    @media (max-width: 650px){ .grid{ grid-template-columns:1fr; } }
+    @media (max-width: 900px){ .grid{ grid-template-columns:1fr; } }
 
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      margin-bottom: 10px;
-    }
     label{
-      font-size: 13px;
-      color: rgba(255,255,255,.78);
+      display:block;
+      margin: 10px 0 6px;
+      font-size: 12px;
+      color: rgba(234,240,255,.84);
     }
     input, select, textarea{
       width:100%;
       padding: 12px 12px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
       color: var(--text);
       outline:none;
+      font-size: 14px;
     }
-    input::placeholder, textarea::placeholder{ color: rgba(255,255,255,.45); }
-    textarea{ min-height: 96px; resize: vertical; }
+    textarea{ min-height: 96px; resize:vertical; }
 
-    .hint{
-      font-size: 12.5px;
-      color: rgba(255,255,255,.65);
-      line-height:1.45;
-      margin-top: 10px;
-    }
-
-    .status{
+    .result{
       margin-top: 12px;
       padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.08);
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.20);
       display:none;
+      font-size: 13px;
     }
-    .status.show{ display:block; }
-    .status.ok{ border-color: rgba(34,197,94,.35); }
-    .status.bad{ border-color: rgba(239,68,68,.35); }
-
-    .fineprint{
-      margin-top: 12px;
-      font-size: 12px;
-      color: rgba(255,255,255,.60);
-      line-height:1.45;
+    .small{
+      margin-top: 10px;
+      font-size: 11px;
+      color: rgba(234,240,255,.62);
+      line-height: 1.4;
     }
 
-    .cards{
-      display:grid;
-      grid-template-columns: 1fr;
+    .sectionHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
       gap: 12px;
-      margin-top: 12px;
+      margin-bottom: 12px;
     }
-    .card{
-      padding: 14px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.14);
+    .sectionHead h2{
+      margin:0;
+      font-size: 22px;
+      letter-spacing:-.2px;
     }
-    .card b{ display:block; margin-bottom: 4px; }
-    .card span{ color: rgba(255,255,255,.74); font-size: 13.5px; }
+    .sectionHead p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 64ch;
+      line-height: 1.5;
+    }
+    @media (max-width: 900px){
+      .sectionHead{ flex-direction:column; align-items:flex-start; }
+    }
 
-    .two-col{
+    .cards4{
       display:grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(4, 1fr);
       gap: 10px;
-      margin-top: 12px;
     }
-    @media (max-width: 650px){ .two-col{ grid-template-columns:1fr; } }
+    @media (max-width: 900px){ .cards4{ grid-template-columns:1fr 1fr; } }
+    @media (max-width: 520px){ .cards4{ grid-template-columns:1fr; } }
+
+    .card{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.20);
+      padding: 14px;
+      min-height: 116px;
+    }
+    .card strong{ display:block; font-size: 14px; margin-bottom: 6px; }
+    .card p{ margin:0; color: var(--muted); font-size: 12px; line-height: 1.45; }
+
+    .cards3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 900px){ .cards3{ grid-template-columns:1fr; } }
+
+    .gallery{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 10px;
+    }
+    @media (max-width: 900px){ .gallery{ grid-template-columns:1fr; } }
+    .ph{
+      border-radius: 18px;
+      border:1px dashed rgba(255,255,255,.22);
+      background: rgba(0,0,0,.18);
+      min-height: 220px;
+      display:grid;
+      place-items:center;
+      color: rgba(234,240,255,.55);
+      font-weight: 900;
+      letter-spacing:.3px;
+    }
+
+    details{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.20);
+      padding: 12px 14px;
+    }
+    details + details{ margin-top: 10px; }
+    summary{
+      cursor:pointer;
+      font-weight: 900;
+      list-style:none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    details p{ color: var(--muted); margin: 10px 0 0; font-size: 13px; line-height: 1.55; }
+
+    footer{
+      margin-top: 18px;
+      text-align:center;
+      color: rgba(234,240,255,.62);
+      font-size: 12px;
+      padding: 10px 0 0;
+    }
+    .fine{ margin-top: 8px; font-size: 11px; opacity:.78; line-height:1.4; }
   </style>
 </head>
 
 <body>
+  <div class="bg" aria-hidden="true"></div>
+
   <div class="wrap">
-    <div class="topbar">
+    <div class="nav">
       <div class="brand">
-        <div class="logo">W</div>
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3 2 11h2v9h6v-6h4v6h6v-9h2L12 3z"/></svg>
+        </div>
+        <div class="title">
+          <strong>White’s Painting & Renovations</strong>
+          <span>Ukiah, CA • Free Estimates • Financing Available</span>
+        </div>
+      </div>
+
+      <button class="menuBtn" id="menuBtn" type="button">☰ Menu</button>
+
+      <div class="navlinks" aria-label="Primary navigation">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#areas">Service Area</a>
+        <a href="#faq">FAQ</a>
+        <a href="#estimate">Estimate</a>
+        <a href="tel:+17073501569">Call</a>
+      </div>
+    </div>
+
+    <div class="mobileMenu" id="mobileMenu">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#areas">Service Area</a>
+      <a href="#faq">FAQ</a>
+      <a href="#estimate">Get Estimate</a>
+      <a href="tel:+17073501569">Call (707) 350-1569</a>
+    </div>
+
+    <section class="hero" id="top">
+      <div class="panel heroLeft">
+        <div class="kicker"><span class="dot"></span> Clean work • Clear pricing • Fast scheduling</div>
+        <h1 class="headline">Make your home look <span class="grad">brand new</span>.</h1>
+        <p class="subhead">
+          We handle interior & exterior painting, cabinet refinishing, drywall repair, flooring, and remodel punch lists.
+          We protect your home, show up on time, and deliver a finish that looks expensive.
+        </p>
+
+        <div class="pillRow">
+          <div class="pill">✅ Free Estimates</div>
+          <div class="pill">🧰 Painting • Cabinets • Drywall</div>
+          <div class="pill">🧱 Flooring • Remodel Support</div>
+          <div class="pill">💳 Financing Available</div>
+        </div>
+
+        <div class="ctaRow">
+          <a class="btn btn-primary" href="#estimate">Get a Free Estimate</a>
+          <a class="btn btn-ghost" href="sms:+17073501569?body=Hi%20Sally%20—%20I%20need%20an%20estimate.">Text Sally</a>
+          <a class="btn btn-ghost" href="tel:+17073501569">Call Now</a>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><strong>Fast Response</strong><span>We’ll text you back quickly to schedule.</span></div>
+          <div class="stat"><strong>Professional Prep</strong><span>Caulk, prime, mask, protect, clean lines.</span></div>
+          <div class="stat"><strong>Quality Finish</strong><span>Durable coatings, crisp trim, smooth walls.</span></div>
+        </div>
+      </div>
+
+      <aside class="panel" id="estimate">
+        <h3 class="formTitle">Free Estimate — Get Scheduled</h3>
+        <p class="formSub">Fill this out. Sally will text you to set a walkthrough time.</p>
+
+        <form id="leadForm">
+          <div class="grid">
+            <div>
+              <label for="first_name">First Name</label>
+              <input id="first_name" name="first_name" placeholder="Your name" />
+            </div>
+            <div>
+              <label for="phone">Phone (required)</label>
+              <input id="phone" name="phone" placeholder="(707) 555-1234" required />
+            </div>
+          </div>
+
+          <div class="grid">
+            <div>
+              <label for="project_type">Project Type (required)</label>
+              <select id="project_type" name="project_type" required>
+                <option value="">Select…</option>
+                <option>Interior Painting</option>
+                <option>Exterior Painting</option>
+                <option>Cabinet Painting</option>
+                <option>Drywall Repair</option>
+                <option>Flooring</option>
+                <option>Remodel / Punch List</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="city">City (required)</label>
+              <input id="city" name="city" placeholder="Ukiah" required />
+            </div>
+          </div>
+
+          <label for="address">Property Address (required)</label>
+          <input id="address" name="address" placeholder="123 Main St" required />
+
+          <label for="notes">Notes (optional)</label>
+          <textarea id="notes" name="notes" placeholder="Rooms, cabinets, timeline, etc."></textarea>
+
+          <div class="ctaRow" style="margin-top:14px;">
+            <button class="btn btn-primary" type="submit">Submit Request</button>
+            <a class="btn btn-ghost" href="tel:+17073501569">Call Instead</a>
+          </div>
+
+          <div class="result" id="result"></div>
+
+          <div class="small">
+            By submitting you agree to receive SMS messages related to your estimate request.
+            Reply <b>STOP</b> to opt out, <b>HELP</b> for help. Msg/data rates may apply.
+          </div>
+        </form>
+      </aside>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="panel" id="services">
+      <div class="sectionHead">
         <div>
-          <h2>White’s Painting & Renovations</h2>
-          <p>Ukiah, CA • Free Estimates • Financing Available</p>
+          <h2>Services</h2>
+          <p>Everything you need for a clean, updated look — from prep to final coat.</p>
+        </div>
+        <a class="btn btn-primary" href="#estimate">Request Estimate</a>
+      </div>
+
+      <div class="cards4">
+        <div class="card">
+          <strong>Interior Painting</strong>
+          <p>Walls, ceilings, doors & trim. Crisp lines, smooth finish, clean protection.</p>
+        </div>
+        <div class="card">
+          <strong>Exterior Painting</strong>
+          <p>Scrape, sand, prime, caulk, and durable coatings to protect your home.</p>
+        </div>
+        <div class="card">
+          <strong>Cabinet Refinishing</strong>
+          <p>Proper prep + sprayed/brush finish for a factory-smooth cabinet look.</p>
+        </div>
+        <div class="card">
+          <strong>Drywall + Repairs</strong>
+          <p>Patches, texture match, corner beads, water stains, and paint blending.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="panel" id="gallery">
+      <div class="sectionHead">
+        <div>
+          <h2>Recent Work</h2>
+          <p>Add 4–8 photos here and this instantly feels like a real, high-end company site.</p>
+        </div>
+        <a class="btn btn-ghost" href="#estimate">Get on the Schedule</a>
+      </div>
+
+      <div class="gallery">
+        <div class="ph">Main Before/After Photo</div>
+        <div class="ph">More Photos</div>
+      </div>
+      <div class="gallery" style="margin-top:10px;">
+        <div class="ph">Cabinet / Trim</div>
+        <div class="ph">Exterior / Deck</div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="panel" id="process">
+      <div class="sectionHead">
+        <div>
+          <h2>Our Process</h2>
+          <p>Simple, professional, and consistent — so you always know what’s happening.</p>
         </div>
       </div>
 
-      <div class="pill">📞 Call/Text: <b>707-350-1569</b></div>
-    </div>
+      <div class="cards3">
+        <div class="card">
+          <strong>1) Quick Intake</strong>
+          <p>You submit the form (or call/text). We confirm details and schedule a walkthrough.</p>
+        </div>
+        <div class="card">
+          <strong>2) Walkthrough + Estimate</strong>
+          <p>We measure, note prep needs, and provide a clear scope of work.</p>
+        </div>
+        <div class="card">
+          <strong>3) Prep + Finish</strong>
+          <p>Protect surfaces, prep properly, paint, detail, and clean up like we were never there.</p>
+        </div>
+      </div>
+    </section>
 
-    <div class="hero">
-      <!-- Left: hero copy -->
-      <div class="panel">
-        <div class="panel-inner">
-          <h1>Modern Painting & Remodel Work — Done Right.</h1>
-          <p class="sub">
-            Tell us about your project and we’ll text you back to schedule a quick walkthrough.
-            Fast, professional, and clean work — serving Mendocino & Lake County.
-          </p>
-
-          <div class="badges">
-            <div class="badge">✅ Interior & Exterior Painting</div>
-            <div class="badge">✅ Cabinets & Trim</div>
-            <div class="badge">✅ Drywall & Repairs</div>
-            <div class="badge">✅ Flooring & Remodel</div>
-          </div>
-
-          <div class="cards">
-            <div class="card">
-              <b>What happens next?</b>
-              <span>After you submit, Sally will text you to confirm details and lock in a time.</span>
-            </div>
-            <div class="card">
-              <b>Keep it simple</b>
-              <span>Address + project type + best contact number is all we need to start.</span>
-            </div>
-          </div>
+    <!-- REVIEWS -->
+    <section class="panel" id="reviews">
+      <div class="sectionHead">
+        <div>
+          <h2>What Customers Say</h2>
+          <p>(Replace these with real reviews later — even 3 real ones makes this pop.)</p>
         </div>
       </div>
 
-      <!-- Right: form -->
-      <div class="panel">
-        <div class="panel-inner">
-          <h2 style="margin:0 0 10px; font-size:18px;">Request a Free Estimate</h2>
-
-          <form id="leadForm" autocomplete="on">
-            <div class="grid">
-              <div class="field">
-                <label for="first_name">First name (optional)</label>
-                <input id="first_name" name="first_name" placeholder="John Smith" />
-              </div>
-
-              <div class="field">
-                <label for="phone">Phone (required)</label>
-                <input id="phone" name="phone" placeholder="(707) 555-1234" required />
-              </div>
-            </div>
-
-            <div class="grid">
-              <div class="field">
-                <label for="project_type">Project type (required)</label>
-                <select id="project_type" name="project_type" required>
-                  <option value="">Select…</option>
-                  <option>Interior Painting</option>
-                  <option>Exterior Painting</option>
-                  <option>Cabinet Painting</option>
-                  <option>Drywall Repair</option>
-                  <option>Flooring</option>
-                  <option>Bathroom Remodel</option>
-                  <option>Deck / Fence</option>
-                  <option>Other</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="city">City (required)</label>
-                <input id="city" name="city" placeholder="Ukiah" required />
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="address">Property address (required)</label>
-              <input id="address" name="address" placeholder="123 Main St" required />
-            </div>
-
-            <div class="field">
-              <label for="notes">Notes (optional)</label>
-              <textarea id="notes" name="notes" placeholder="What rooms? Any deadlines? Occupied or vacant?"></textarea>
-            </div>
-
-            <div class="two-col">
-              <button class="btn3d" type="submit">🚀 Submit Request</button>
-              <button class="btnGhost" type="button" id="callBtn">📞 Call Now</button>
-            </div>
-
-            <div id="status" class="status"></div>
-
-            <div class="fineprint">
-              By submitting, you agree to receive texts about your estimate request. Reply STOP to opt out, HELP for help.
-              Msg & data rates may apply.
-            </div>
-          </form>
-
-          <div class="hint">
-            Tip: Your endpoint requires <b>phone, address, city, project_type</b>. If any are missing, it will return 400.
-          </div>
+      <div class="cards3">
+        <div class="card">
+          <strong>“Super clean work and great communication.”</strong>
+          <p>They protected everything, finished fast, and the lines are perfect.</p>
+        </div>
+        <div class="card">
+          <strong>“Cabinets look brand new.”</strong>
+          <p>The finish is smooth and the hardware/install was clean.</p>
+        </div>
+        <div class="card">
+          <strong>“On time, professional, and worth it.”</strong>
+          <p>Showed up when they said they would and kept the jobsite tidy.</p>
         </div>
       </div>
-    </div>
+    </section>
+
+    <!-- SERVICE AREA -->
+    <section class="panel" id="areas">
+      <div class="sectionHead">
+        <div>
+          <h2>Service Area</h2>
+          <p>Ukiah and surrounding areas in Mendocino & Lake County.</p>
+        </div>
+      </div>
+
+      <div class="cards4">
+        <div class="card"><strong>Ukiah</strong><p>Primary service area</p></div>
+        <div class="card"><strong>Willits</strong><p>Interior & exterior projects</p></div>
+        <div class="card"><strong>Lakeport</strong><p>Painting + renovation</p></div>
+        <div class="card"><strong>Clearlake / Lower Lake</strong><p>Trim, decks, full repaints</p></div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="panel" id="faq">
+      <div class="sectionHead">
+        <div>
+          <h2>FAQ</h2>
+          <p>These answers help customers trust you and reduce back-and-forth.</p>
+        </div>
+      </div>
+
+      <details>
+        <summary>Do you offer free estimates?</summary>
+        <p>Yes. Submit the form or call/text and we’ll schedule a walkthrough.</p>
+      </details>
+      <details>
+        <summary>Do you offer financing?</summary>
+        <p>Yes — financing is available to qualified customers.</p>
+      </details>
+      <details>
+        <summary>How soon can you start?</summary>
+        <p>It depends on current scheduling and project size. We’ll give you a clear timeline after the walkthrough.</p>
+      </details>
+      <details>
+        <summary>Do you do prep work and repairs?</summary>
+        <p>Yes. Proper prep is where quality comes from: scraping, sanding, caulking, priming, patching, and protecting surfaces.</p>
+      </details>
+    </section>
+
+    <section class="panel" id="contact">
+      <div class="sectionHead">
+        <div>
+          <h2>Contact</h2>
+          <p>Call or text anytime — or submit the form above and we’ll reach out.</p>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn btn-primary" href="tel:+17073501569">Call (707) 350-1569</a>
+          <a class="btn btn-ghost" href="sms:+17073501569?body=Hi%20Sally%20—%20I%20need%20an%20estimate.">Text Sally</a>
+        </div>
+      </div>
+
+      <div class="cards3">
+        <div class="card">
+          <strong>Phone</strong>
+          <p><a href="tel:+17073501569" style="color:rgba(234,240,255,.92);text-decoration:none;">(707) 350-1569</a></p>
+        </div>
+        <div class="card">
+          <strong>Location</strong>
+          <p>Ukiah, CA</p>
+        </div>
+        <div class="card">
+          <strong>Hours</strong>
+          <p>Mon–Sat • By appointment</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="yr"></span> White’s Painting & Renovations • Ukiah, CA
+      <div class="fine">
+        Free Estimates • Financing Available • Reply <b>STOP</b> to opt out • Reply <b>HELP</b> for help
+      </div>
+    </footer>
   </div>
 
   <script>
-    const form = document.getElementById('leadForm');
-    const statusBox = document.getElementById('status');
-    const callBtn = document.getElementById('callBtn');
+    document.getElementById("yr").textContent = new Date().getFullYear();
 
-    callBtn.addEventListener('click', () => {
-      // For desktop, this may open a calling app or do nothing. Still useful on mobile.
-      window.location.href = "tel:+17073501569";
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    menuBtn?.addEventListener("click", () => {
+      const isOpen = mobileMenu.style.display === "block";
+      mobileMenu.style.display = isOpen ? "none" : "block";
     });
+    mobileMenu?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mobileMenu.style.display="none"));
 
-    function showStatus(ok, msg){
-      statusBox.className = "status show " + (ok ? "ok" : "bad");
-      statusBox.textContent = msg;
+    // Lead form submit
+    const API_URL = "/web/lead"; // same domain
+
+    function showResult(msg, ok=true){
+      const el = document.getElementById("result");
+      el.style.display = "block";
+      el.style.borderColor = ok ? "rgba(0,255,168,.35)" : "rgba(255,77,109,.45)";
+      el.innerHTML = msg;
     }
 
-    form.addEventListener('submit', async (e) => {
+    document.getElementById("leadForm").addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const payload = {
-        first_name: document.getElementById('first_name').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
-        project_type: document.getElementById('project_type').value.trim(),
-        address: document.getElementById('address').value.trim(),
-        city: document.getElementById('city').value.trim(),
-        notes: document.getElementById('notes').value.trim()
+        first_name: document.getElementById("first_name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        project_type: document.getElementById("project_type").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        notes: document.getElementById("notes").value.trim(),
       };
 
-      // Basic client-side validation
-      if (!payload.phone || !payload.address || !payload.city || !payload.project_type){
-        showStatus(false, "Please fill out Phone, Project Type, Address, and City.");
+      if (!payload.phone || !payload.project_type || !payload.address || !payload.city) {
+        showResult("Please fill in all required fields.", false);
         return;
       }
 
-      // Disable submit to prevent double posts
-      const submitBtn = form.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Sending…";
+      showResult("Submitting…", true);
 
-      try{
-        const res = await fetch('/web/lead', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type":"application/json" },
           body: JSON.stringify(payload)
         });
 
-        const data = await res.json().catch(() => ({}));
+        const data = await res.json().catch(()=>({}));
 
         if (res.ok && (data.ok === true || data.ok === undefined)) {
-          showStatus(true, "✅ Submitted! Sally will text you shortly to schedule.");
-          form.reset();
+          showResult("✅ Thank you! Sally will text you shortly to schedule your estimate.", true);
+          e.target.reset();
         } else {
-          const err = data.error || ("Request failed (" + res.status + ").");
-          showStatus(false, "❌ " + err);
+          showResult(data?.error || "Something went wrong. Please try again or call (707) 350-1569.", false);
         }
-      } catch (err){
-        showStatus(false, "❌ Network error. If you're using ngrok, make sure HTTPS is working and the server is running.");
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "🚀 Submit Request";
+      } catch (err) {
+        showResult("Network error. Please try again or call (707) 350-1569.", false);
       }
     });
   </script>
