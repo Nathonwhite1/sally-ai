@@ -1,0 +1,43 @@
+﻿<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Sally Admin - Lead {{lead.id}}</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 16px; max-width: 900px; margin: 0 auto; }
+    .msg { padding: 10px; margin: 8px 0; border-radius: 10px; }
+    .in { background: #f1f1f1; }
+    .out { background: #e6f3ff; }
+    pre { background: #fafafa; padding: 10px; border: 1px solid #eee; }
+  </style>
+</head>
+<body>
+  <p><a href="/admin/leads?pw={{pw}}">← Back to Leads</a></p>
+  <h2>Lead #{{lead.id}}</h2>
+  <p>
+    <b>Phone:</b> {{customer.phone}}<br/>
+    <b>Email:</b> {{customer.email or (lead.intake_data.get('email') if lead.intake_data else '')}}<br/>
+    <b>Type:</b> {{lead.project_type}}<br/>
+    <b>Address:</b> {{lead.address or (lead.intake_data.get('address_raw') if lead.intake_data else '')}}<br/>
+    <b>Timeline:</b> {{lead.timeline}}<br/>
+    <b>Stage:</b> {{lead.intake_stage}}<br/>
+  </p>
+
+  <h3>Conversation</h3>
+  {% for m in messages %}
+    <div class="msg {{m.direction}}">
+      <b>{{"Customer" if m.direction=="in" else "Sally"}}:</b><br/>
+      {{m.body}}
+    </div>
+  {% endfor %}
+
+  <h3>Create Proposal</h3>
+  <form method="post" action="/admin/leads/{{lead.id}}/proposal">
+    <input type="hidden" name="pw" value="{{pw}}" />
+    <button type="submit">Generate Proposal PDF</button>
+  </form>
+
+  <h3>Intake Data</h3>
+  <pre>{{lead.intake_data}}</pre>
+</body>
+</html>
