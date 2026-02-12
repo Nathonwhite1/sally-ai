@@ -26,3 +26,5 @@ async def sms_webhook(
 ):
     reply = "Hi! I’m Sally 👋 Thanks for texting. What city are you in and is this interior, exterior, or cabinets?"
     return f'<?xml version="1.0" encoding="UTF-8"?><Response><Message>{reply}</Message></Response>'
+from app.voice.routes import router as voice_router
+app.include_router(voice_router, prefix="/voice")
