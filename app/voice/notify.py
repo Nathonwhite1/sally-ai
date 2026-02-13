@@ -1,4 +1,5 @@
-﻿from __future__ import annotations
+﻿print("NOTIFY ENV CHECK → from:", os.getenv("TWILIO_FROM_NUMBER"), "sid exists:", bool(os.getenv("TWILIO_ACCOUNT_SID")))
+from __future__ import annotations
 import os
 from twilio.rest import Client
 
