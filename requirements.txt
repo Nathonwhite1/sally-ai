@@ -9,3 +9,5 @@ reportlab==4.2.5
 python-dotenv==1.0.1
 requests==2.32.3
 twilio
+google-api-python-client
+google-auth
