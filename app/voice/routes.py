@@ -54,6 +54,7 @@ async def voice_root(request: Request):
     form = await request.form()
     call_sid = str(form.get("CallSid", ""))
     _ = get_state(call_sid)
+    print("VOICE: root", {"CallSid": call_sid})
 
     return gather(
         "/voice/intent",
@@ -68,6 +69,8 @@ async def voice_intent(request: Request):
     call_sid = str(form.get("CallSid", ""))
     speech = str(form.get("SpeechResult", ""))
     st = get_state(call_sid)
+
+    print("VOICE: intent", {"CallSid": call_sid, "SpeechResult": speech})
 
     s = norm(speech)
     if any(w in s for w in ["estimate", "quote", "pricing", "paint", "painting", "remodel"]):
@@ -85,6 +88,7 @@ async def voice_name(request: Request):
     st = get_state(call_sid)
 
     st.name = (speech or "").strip()[:80]
+    print("VOICE: name", {"CallSid": call_sid, "name": st.name})
     return gather("/voice/city", "Thanks. What city is the project located in?")
 
 
@@ -96,6 +100,7 @@ async def voice_city(request: Request):
     st = get_state(call_sid)
 
     st.city = (speech or "").strip()[:60]
+    print("VOICE: city", {"CallSid": call_sid, "city": st.city})
     return gather("/voice/type", "Is this interior painting, exterior, or both?")
 
 
@@ -116,6 +121,7 @@ async def voice_type(request: Request):
     else:
         return gather("/voice/type", "Just to confirm—interior, exterior, or both?")
 
+    print("VOICE: type", {"CallSid": call_sid, "type": st.project_type})
     return gather("/voice/size", "About how many rooms, or roughly how many square feet?")
 
 
@@ -127,6 +133,7 @@ async def voice_size(request: Request):
     st = get_state(call_sid)
 
     st.size = (speech or "").strip()[:80]
+    print("VOICE: size", {"CallSid": call_sid, "size": st.size})
     return gather("/voice/timeline", "Are you looking to start soon, or just gathering estimates right now?")
 
 
@@ -138,6 +145,7 @@ async def voice_timeline(request: Request):
     st = get_state(call_sid)
 
     st.timeline = (speech or "").strip()[:80]
+    print("VOICE: timeline", {"CallSid": call_sid, "timeline": st.timeline})
     return gather("/voice/address", "Perfect. What’s the property address for the walkthrough?")
 
 
@@ -149,6 +157,7 @@ async def voice_address(request: Request):
     st = get_state(call_sid)
 
     st.address = (speech or "").strip()[:140]
+    print("VOICE: address", {"CallSid": call_sid, "address": st.address})
     return gather("/voice/email", "What’s the best email to send your estimate to? You can say it slowly.")
 
 
@@ -160,13 +169,14 @@ async def voice_email(request: Request):
     st = get_state(call_sid)
 
     st.email = (speech or "").strip()[:140]
+    print("VOICE: email", {"CallSid": call_sid, "email": st.email})
 
     calendar_id = os.getenv("GOOGLE_CALENDAR_ID", "natureme500@gmail.com")
+    print("VOICE: calendar_id", calendar_id)
 
     now = datetime.now(tz=PACIFIC)
     candidates = build_candidate_slots(now, business_days=10)
 
-    # Pick first 2 slots that are actually free (60 min blocks)
     good: list[datetime] = []
     for start in candidates:
         end = start + timedelta(minutes=60)
@@ -174,28 +184,20 @@ async def voice_email(request: Request):
             if is_free(calendar_id, start, end):
                 good.append(start)
         except Exception as e:
-            send_owner_sms(f"GOOGLE FREEBUSY FAILED\n{e}")
+            print("GCAL: freebusy FAILED", repr(e))
+            # don’t break; still offer slots without freebusy if Google is flaky
             break
 
         if len(good) >= 2:
             break
 
+    # If Google free/busy didn’t return slots, fall back to first two candidates
+    if len(good) < 2:
+        good = candidates[:2]
+
     slots = good
     st.offered_slots = [dt.isoformat() for dt in slots]
-
-    if len(slots) < 2:
-        vr = VoiceResponse()
-        vr.say(
-            "Thanks. We’re fully booked during our weekday hours right now. "
-            "Nathon will call you back to coordinate a time."
-        )
-        send_owner_sms(
-            "CALLBACK NEEDED (no available slots)\n"
-            f"Name: {st.name}\nCity: {st.city}\nAddress: {st.address}\n"
-            f"Type: {st.project_type}\nEmail: {st.email}"
-        )
-        clear_state(call_sid)
-        return as_xml(vr)
+    print("VOICE: offered_slots", st.offered_slots)
 
     prompt = (
         "Great. We book walkthroughs Monday through Friday between 9 and 5. "
@@ -211,6 +213,8 @@ async def voice_schedule(request: Request):
     call_sid = str(form.get("CallSid", ""))
     speech = str(form.get("SpeechResult", ""))
     st = get_state(call_sid)
+
+    print("VOICE: schedule", {"CallSid": call_sid, "SpeechResult": speech, "offered": st.offered_slots})
 
     choice = pick_first_or_second(speech)
     if choice is None:
@@ -236,7 +240,7 @@ async def voice_schedule(request: Request):
     )
 
     try:
-        create_event(
+        ev = create_event(
             calendar_id=calendar_id,
             start=start,
             end=end,
@@ -244,7 +248,9 @@ async def voice_schedule(request: Request):
             location=st.address or "",
             description=description,
         )
+        print("GCAL: created event", ev.get("id"))
     except Exception as e:
+        print("GCAL: create_event FAILED", repr(e))
         send_owner_sms(f"CALENDAR BOOKING FAILED\n{e}\nLead: {st.name} | {st.city} | {st.address}")
 
     vr = VoiceResponse()
