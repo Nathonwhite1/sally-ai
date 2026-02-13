@@ -22,6 +22,11 @@ def _svc():
     return build("calendar", "v3", credentials=creds, cache_discovery=False)
 
 def is_free(calendar_id: str, start: datetime, end: datetime) -> bool:
+    calendar_id = calendar_id.strip()
+    import logging
+    logging.getLogger("uvicorn.error").info("GCAL: using calendar_id=%r", calendar_id)
+
+
     service = _svc()
     body = {
         "timeMin": start.astimezone(PACIFIC).isoformat(),
@@ -34,6 +39,8 @@ def is_free(calendar_id: str, start: datetime, end: datetime) -> bool:
     return len(busy) == 0
 
 def create_event(calendar_id: str, start: datetime, end: datetime, summary: str, location: str, description: str):
+    calendar_id = calendar_id.strip()
+
     service = _svc()
     event = {
         "summary": summary,

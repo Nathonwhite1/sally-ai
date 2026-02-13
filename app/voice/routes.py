@@ -173,7 +173,7 @@ async def voice_email(request: Request):
     st.email = (speech or "").strip()[:140]
     logger.info("VOICE: email %s", {"CallSid": call_sid, "email": st.email})
 
-    calendar_id = os.getenv("GOOGLE_CALENDAR_ID", "natureme500@gmail.com")
+    calendar_id = os.getenv("GOOGLE_CALENDAR_ID", "natureme500@gmail.com").strip()
     logger.info("VOICE: calendar_id %s", calendar_id)
 
     now = datetime.now(tz=PACIFIC)
@@ -234,7 +234,7 @@ async def voice_schedule(request: Request):
     idx = 0 if choice == 1 else 1
     dt = datetime.fromisoformat(st.offered_slots[idx])
 
-    calendar_id = os.getenv("GOOGLE_CALENDAR_ID", "natureme500@gmail.com")
+    calendar_id = os.getenv("GOOGLE_CALENDAR_ID", "natureme500@gmail.com").strip()
     start = dt
     end = dt + timedelta(minutes=60)
 
