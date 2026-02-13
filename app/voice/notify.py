@@ -1,5 +1,5 @@
-﻿
-from __future__ import annotations
+﻿from __future__ import annotations
+
 import os
 from twilio.rest import Client
 
@@ -13,7 +13,7 @@ def send_owner_sms(message: str) -> None:
         return
 
     Client(sid, token).messages.create(
-        body=message, 
-        from_=from_number, 
-        to=to_number
+        body=message,
+        from_=from_number,
+        to=to_number,
     )

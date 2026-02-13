@@ -10,12 +10,7 @@ PACIFIC = ZoneInfo("America/Los_Angeles")
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
 def _svc():
-    # Production (Render): store the entire JSON in an env var
     sa_json = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON", "").strip()
-print("GCAL ENV CHECK → has_json:", bool(sa_json), "calendar_id:", os.getenv("GOOGLE_CALENDAR_ID"))
-
-
-    # Local dev fallback: read from file
     sa_file = os.getenv("GOOGLE_SERVICE_ACCOUNT_FILE", "google_credentials.json").strip()
 
     if sa_json:
