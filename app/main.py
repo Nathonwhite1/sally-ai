@@ -20,10 +20,6 @@ def _digits(s: str) -> str:
 
 
 def normalize_phone(phone: str) -> str:
-    """
-    Normalize US numbers to +1XXXXXXXXXX when possible.
-    If already starts with +, keep it.
-    """
     p = (phone or "").strip()
     if p.startswith("+"):
         return p
@@ -32,23 +28,18 @@ def normalize_phone(phone: str) -> str:
         return "+1" + d
     if len(d) == 11 and d.startswith("1"):
         return "+" + d
-    return p  # fallback as-is
+    return p  # fallback
 
 
-def make_fallback_email(phone: str) -> str:
-    """
-    HighLevel Create/Update Contact requires Email or Phone.
-    Sometimes mapping fails for phone/email; sending BOTH helps.
-    If user didn't supply email, create a safe placeholder.
-    """
+def fallback_email_from_phone(phone: str) -> str:
     d = _digits(phone)
     if not d:
-        return ""
+        return "lead@whitespaintingandrenovations.invalid"
     return f"lead-{d}@whitespaintingandrenovations.invalid"
 
 
 # =========================
-# DEBUG ENDPOINTS (SAFE)
+# DEBUG
 # =========================
 @app.get("/__routes", response_class=JSONResponse)
 async def __routes():
@@ -100,8 +91,7 @@ async def terms_and_conditions_html(request: Request):
 
 
 # =========================
-# WEB LEAD SUBMISSION
-# Forward to HighLevel Inbound Webhook Trigger
+# WEB LEAD SUBMISSION -> HIGHLEVEL INBOUND WEBHOOK
 # =========================
 @app.post("/web/lead")
 async def web_lead(payload: dict):
@@ -112,21 +102,19 @@ async def web_lead(payload: dict):
     first_name = (payload.get("first_name") or "").strip()
     raw_phone = (payload.get("phone") or "").strip()
     phone = normalize_phone(raw_phone)
+    raw_email = (payload.get("email") or "").strip()
+    email = raw_email if raw_email else fallback_email_from_phone(phone)
+
     project_type = (payload.get("project_type") or "").strip()
     address = (payload.get("address") or "").strip()
     city = (payload.get("city") or "").strip()
     notes = (payload.get("notes") or "").strip()
     sms_consent = bool(payload.get("sms_consent"))
 
-    # Optional email from form; if missing, create a placeholder (helps HL mapping)
-    email = (payload.get("email") or "").strip() or make_fallback_email(phone)
-
-    # Required fields to match your front-end requireds
     if not phone or not project_type or not address or not city:
         raise HTTPException(status_code=400, detail="Missing required fields: phone, project_type, address, city")
 
-    # This is the "canonical" payload we want HL to see
-    canonical = {
+    hl_friendly = {
         "source": "website",
         "first_name": first_name,
         "phone": phone,
@@ -136,33 +124,16 @@ async def web_lead(payload: dict):
         "city": city,
         "notes": notes,
         "sms_consent": sms_consent,
-        "tags": [
-            "Website Lead",
-            f"Project: {project_type}" if project_type else "Project: Unknown",
-            "SMS Opt-In" if sms_consent else "NO SMS CONSENT",
-        ],
-    }
 
-    # HighLevel mapping can be picky, so we also send common key variants.
-    # This dramatically increases the chance HL exposes the fields in mapping.
-    hl_friendly = {
-        **canonical,
-
-        # common alternates
-        "firstName": first_name,
-        "FirstName": first_name,
+        # Variants to help HL mapping UI
         "Phone": phone,
         "Email": email,
+        "firstName": first_name,
+        "address1": address,
         "contact_phone": phone,
         "contact_email": email,
-        "address1": address,
-        "Address": address,
-        "City": city,
-        "project": project_type,
     }
 
-    # Some HL webhook triggers expose fields under a nested "data" object
-    # so we send both top-level AND nested.
     final_payload = {
         **hl_friendly,
         "data": hl_friendly,
@@ -176,20 +147,7 @@ async def web_lead(payload: dict):
     if not (200 <= r.status_code < 300):
         raise HTTPException(status_code=502, detail=f"HighLevel returned {r.status_code}: {r.text[:300]}")
 
-    return JSONResponse(
-        {
-            "ok": True,
-            "forward_status": r.status_code,
-            "sent": {
-                "first_name": first_name,
-                "phone": phone,
-                "email": email,
-                "project_type": project_type,
-                "city": city,
-                "sms_consent": sms_consent,
-            },
-        }
-    )
+    return JSONResponse({"ok": True, "forward_status": r.status_code})
 
 
 # =========================
