@@ -9,38 +9,20 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-# =========================
-# CONFIG
-# =========================
+# -------------------------
+# Config
+# -------------------------
 GHL_WEBHOOK_URL = (os.getenv("GHL_WEBHOOK_URL") or "").strip()
 
+# Serve /static/* from app/static
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
-def _digits(s: str) -> str:
-    return re.sub(r"\D+", "", s or "")
-
-
-def normalize_phone(phone: str) -> str:
-    p = (phone or "").strip()
-    if p.startswith("+"):
-        return p
-    d = _digits(p)
-    if len(d) == 10:
-        return "+1" + d
-    if len(d) == 11 and d.startswith("1"):
-        return "+" + d
-    return p  # fallback
+templates = Jinja2Templates(directory="app/templates")
 
 
-def fallback_email_from_phone(phone: str) -> str:
-    d = _digits(phone)
-    if not d:
-        return "lead@whitespaintingandrenovations.invalid"
-    return f"lead-{d}@whitespaintingandrenovations.invalid"
-
-
-# =========================
-# DEBUG
-# =========================
+# -------------------------
+# Debug helpers
+# -------------------------
 @app.get("/__routes", response_class=JSONResponse)
 async def __routes():
     return {"routes": sorted([getattr(r, "path", "") for r in app.routes])}
@@ -55,16 +37,38 @@ async def __debug_env():
     }
 
 
-# =========================
-# STATIC + TEMPLATES
-# =========================
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
-templates = Jinja2Templates(directory="app/templates")
+def normalize_phone(phone: str) -> str:
+    """
+    Normalize US numbers to E.164:
+      (707) 350-1569 -> +17073501569
+      17073501569    -> +17073501569
+    """
+    s = (phone or "").strip()
+    digits = re.sub(r"\D+", "", s)
+
+    if len(digits) == 10:
+        return "+1" + digits
+    if len(digits) == 11 and digits.startswith("1"):
+        return "+" + digits
+    if s.startswith("+") and len(digits) >= 10:
+        return "+" + digits
+    return ""
 
 
-# =========================
-# PAGES
-# =========================
+def fallback_email_from_phone(phone_e164: str) -> str:
+    """
+    HighLevel contact create/update sometimes behaves better if email exists.
+    This creates a harmless placeholder email if none provided.
+    """
+    digits = re.sub(r"\D+", "", phone_e164 or "")
+    if not digits:
+        return ""
+    return f"lead-{digits}@whitespaintingandrenovations.invalid"
+
+
+# -------------------------
+# Pages
+# -------------------------
 @app.get("/", response_class=HTMLResponse)
 async def landing(request: Request):
     return templates.TemplateResponse("landing.html", {"request": request})
@@ -90,10 +94,10 @@ async def terms_and_conditions_html(request: Request):
     return templates.TemplateResponse("terms-and-conditions.html", {"request": request})
 
 
-# =========================
+# -------------------------
 # WEB LEAD SUBMISSION -> HIGHLEVEL INBOUND WEBHOOK
-# =========================
-@app.post("/web/lead")
+# -------------------------
+@app.post("/web/lead", response_class=JSONResponse)
 async def web_lead(payload: dict):
     ghl_url = (os.getenv("GHL_WEBHOOK_URL") or "").strip()
     if not ghl_url:
@@ -102,6 +106,7 @@ async def web_lead(payload: dict):
     first_name = (payload.get("first_name") or "").strip()
     raw_phone = (payload.get("phone") or "").strip()
     phone = normalize_phone(raw_phone)
+
     raw_email = (payload.get("email") or "").strip()
     email = raw_email if raw_email else fallback_email_from_phone(phone)
 
@@ -111,48 +116,39 @@ async def web_lead(payload: dict):
     notes = (payload.get("notes") or "").strip()
     sms_consent = bool(payload.get("sms_consent"))
 
+    # Required fields (match what you enforce on the front-end)
     if not phone or not project_type or not address or not city:
-        raise HTTPException(status_code=400, detail="Missing required fields: phone, project_type, address, city")
+        raise HTTPException(
+            status_code=400,
+            detail="Missing required fields: phone, project_type, address, city",
+        )
 
-    hl_friendly = {
+    webhook_payload = {
         "source": "website",
         "first_name": first_name,
-        "phone": phone,
-        "email": email,
+        "phone": phone,          # E.164 for consistency
+        "email": email,          # placeholder if empty
         "project_type": project_type,
         "address": address,
         "city": city,
         "notes": notes,
         "sms_consent": sms_consent,
-
-        # Variants to help HL mapping UI
-        "Phone": phone,
-        "Email": email,
-        "firstName": first_name,
-        "address1": address,
-        "contact_phone": phone,
-        "contact_email": email,
-    }
-
-    final_payload = {
-        **hl_friendly,
-        "data": hl_friendly,
     }
 
     try:
-        r = requests.post(ghl_url, json=final_payload, timeout=20)
-    except Exception as e:
+        r = requests.post(ghl_url, json=webhook_payload, timeout=20)
+    except requests.RequestException as e:
         raise HTTPException(status_code=502, detail=f"Forwarding failed: {type(e).__name__}: {e}")
 
     if not (200 <= r.status_code < 300):
-        raise HTTPException(status_code=502, detail=f"HighLevel returned {r.status_code}: {r.text[:300]}")
+        raise HTTPException(status_code=502, detail=f"HighLevel returned {r.status_code}: {r.text[:500]}")
 
     return JSONResponse({"ok": True, "forward_status": r.status_code})
 
 
-# =========================
+# -------------------------
 # SMS WEBHOOK (Twilio)
-# =========================
+# -------------------------
 @app.post("/sms", response_class=PlainTextResponse)
 async def sms_webhook(
     From: str = Form(None),
@@ -168,8 +164,8 @@ async def sms_webhook(
     )
 
 
-# =========================
+# -------------------------
 # VOICE ROUTES
-# =========================
-from app.voice.routes import router as voice_router  # noqa: E402
+# -------------------------
+from app.voice.routes import router as voice_router
 app.include_router(voice_router, prefix="/voice")
