@@ -799,69 +799,71 @@
     </footer>
   </div>
 
-  <script>
-    // Year
-    document.getElementById("yr").textContent = new Date().getFullYear();
+ 
+<script>
+  // Year
+  document.getElementById("yr").textContent = new Date().getFullYear();
 
-    // Mobile menu toggle
-    const menuBtn = document.getElementById("menuBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-    menuBtn?.addEventListener("click", () => {
-      const isOpen = mobileMenu.style.display === "block";
-      mobileMenu.style.display = isOpen ? "none" : "block";
-    });
-    mobileMenu?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mobileMenu.style.display="none"));
+  // Mobile menu toggle
+  const menuBtn = document.getElementById("menuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+  menuBtn?.addEventListener("click", () => {
+    const isOpen = mobileMenu.style.display === "block";
+    mobileMenu.style.display = isOpen ? "none" : "block";
+  });
+  mobileMenu?.querySelectorAll("a").forEach(a =>
+    a.addEventListener("click", () => (mobileMenu.style.display = "none"))
+  );
 
-    // Lead form submit
-    const API_URL = "/web/lead";
+  // Lead form submit
+  const API_URL = "/web/lead";
 
-    function showResult(msg, ok=true){
-      const el = document.getElementById("result");
-      el.style.display = "block";
-      el.style.borderColor = ok ? "rgba(0,255,168,.35)" : "rgba(255,77,109,.45)";
-      el.innerHTML = msg;
+  function showResult(msg, ok = true) {
+    const el = document.getElementById("result");
+    el.style.display = "block";
+    el.style.borderColor = ok ? "rgba(0,255,168,.35)" : "rgba(255,77,109,.45)";
+    el.innerHTML = msg;
+  }
+
+  document.getElementById("leadForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      first_name: document.getElementById("first_name").value.trim(),
+      phone: document.getElementById("phone").value.trim(),
+      project_type: document.getElementById("project_type").value.trim(),
+      address: document.getElementById("address").value.trim(),
+      city: document.getElementById("city").value.trim(),
+      notes: document.getElementById("notes").value.trim(),
+      sms_consent: document.getElementById("sms_consent").checked,
+      email: "" // optional, backend will generate fallback if empty
+    };
+
+    if (!payload.phone || !payload.project_type || !payload.address || !payload.city) {
+      showResult("Please fill in all required fields.", false);
+      return;
     }
 
-    document.getElementById("leadForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-      const payload = {
-        first_name: document.getElementById("first_name").value.trim(),
-        phone: document.getElementById("phone").value.trim(),
-        project_type: document.getElementById("project_type").value.trim(),
-        address: document.getElementById("address").value.trim(),
-        city: document.getElementById("city").value.trim(),
-        notes: document.getElementById("notes").value.trim(),
-        sms_consent: document.getElementById("sms_consent").checked,
-      };
+      const data = await res.json().catch(() => ({}));
 
-      if (!payload.phone || !payload.project_type || !payload.address || !payload.city) {
-        showResult("Please fill in all required fields.", false);
-        return;
+      if (res.ok && data.ok !== false) {
+        showResult("Thank you! Sally will text you shortly to schedule your estimate.");
+        e.target.reset();
+      } else {
+        showResult(
+          data?.detail || data?.error || "Something went wrong. Please try again or call (707) 851-6910.",
+          false
+        );
       }
-
-      
-      }
-
-      try {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type":"application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        const data = await res.json().catch(()=>({}));
-
-        if (res.ok && data.ok !== false) {
-          showResult("Thank you! Sally will text you shortly to schedule your estimate.");
-          e.target.reset();
-        } else {
-          showResult(data?.error || "Something went wrong. Please try again or call (707) 350-1569.", false);
-        }
-      } catch (err) {
-        showResult("Network error. Please try again or call (707) 350-1569.", false);
-      }
-    });
-  </script>
-</body>
-</html>
+    } catch (err) {
+      showResult("Network error. Please try again or call (707) 851-6910.", false);
+    }
+  });
+</script>
