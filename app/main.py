@@ -8,6 +8,14 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
+@app.get("/__debug_env", response_class=JSONResponse)
+async def __debug_env():
+    v = (os.getenv("GHL_WEBHOOK_URL") or "").strip()
+    return {
+        "has_GHL_WEBHOOK_URL": bool(v),
+        "GHL_WEBHOOK_URL_preview": (v[:80] + "...") if len(v) > 80 else v
+    }
+
 # HighLevel Inbound Webhook URL (set in Render env vars)
 GHL_WEBHOOK_URL = os.getenv("GHL_WEBHOOK_URL", "").strip()
 
