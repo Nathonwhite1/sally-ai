@@ -5,6 +5,11 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
+# Debug: list all routes currently registered (useful for Render)
+@app.get("/__routes", response_class=JSONResponse)
+async def __routes():
+    return {"routes": sorted([getattr(r, "path", "") for r in app.routes])}
+
 # Serve /static/* from app/static
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
