@@ -602,12 +602,10 @@
           <!-- ✅ A2P OPT-IN -->
           <div class="consentBox">
             <label for="sms_consent">
-              <input type="checkbox" id="sms_consent" name="sms_consent" required />
+              <input type="checkbox" id="sms_consent" name="sms_consent">
               <span>
-                By checking this box, you agree to receive SMS messages from
-                <strong>White’s Painting & Renovations</strong> regarding your estimate request and project updates
-                (including estimate confirmations and scheduling communication).
-                Message frequency varies. Message &amp; data rates may apply. Reply STOP to unsubscribe.
+               By checking this box, you agree to receive informational SMS messages from White’s Painting & Renovations regarding your estimate request, appointment reminders, scheduling updates, and project communication. Message frequency varies. Message & data rates may apply. Reply STOP to unsubscribe or HELP for help.
+
               </span>
             </label>
 
@@ -842,9 +840,7 @@
         return;
       }
 
-      if (!payload.sms_consent) {
-        showResult("Please check the SMS consent box to submit this request.", false);
-        return;
+      
       }
 
       try {
