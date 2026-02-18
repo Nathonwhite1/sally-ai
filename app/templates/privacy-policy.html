@@ -1,0 +1,278 @@
+<!-- =========================
+     FILE: privacy-policy.html
+     ========================= -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Privacy Policy | White’s Painting & Renovations</title>
+  <meta name="description" content="Privacy Policy for White’s Painting & Renovations (Ukiah, CA). Learn how we collect, use, and protect your information." />
+
+  <style>
+    :root{
+      --bg:#070A0F;
+      --text:#EAF0FF;
+      --muted:rgba(234,240,255,.72);
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(255,255,255,.14);
+      --shadow:0 22px 70px rgba(0,0,0,.50);
+      --radius:22px;
+
+      --brand:#35C7FF;
+      --brand2:#7C4DFF;
+      --accent:#00FFA8;
+      --max:980px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x:hidden;
+    }
+
+    .bg{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      background:
+        radial-gradient(1100px 900px at 15% 10%, rgba(53,199,255,.20), transparent 60%),
+        radial-gradient(900px 700px at 85% 18%, rgba(124,77,255,.20), transparent 55%),
+        radial-gradient(900px 900px at 50% 92%, rgba(0,255,168,.10), transparent 60%);
+    }
+    .bg::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(7,10,15,.86), rgba(7,10,15,.94));
+      z-index:1;
+    }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 22px 16px 70px;
+    }
+
+    .nav{
+      position: sticky;
+      top: 12px;
+      z-index: 60;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 70px rgba(0,0,0,.35);
+    }
+
+    .brand{
+      display:flex; align-items:center; gap:12px;
+    }
+    .logo{
+      width:44px; height:44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(53,199,255,.95), rgba(124,77,255,.95));
+      border: 1px solid rgba(255,255,255,.22);
+      box-shadow: 0 18px 44px rgba(53,199,255,.20);
+      display:grid; place-items:center;
+      flex:0 0 auto;
+    }
+    .logo svg{ width:24px; height:24px; fill:#fff; opacity:.95; }
+
+    .brand .title{ line-height:1.12; }
+    .brand .title strong{ display:block; font-size: 14px; letter-spacing:.2px; }
+    .brand .title span{ display:block; font-size: 12px; color: var(--muted); }
+
+    .btn{
+      appearance:none;
+      border:1px solid rgba(255,255,255,0.18);
+      padding: 12px 14px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing:.2px;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+      transition: transform .12s ease, filter .12s ease;
+      box-shadow:
+        0 10px 0 rgba(0,0,0,.26),
+        0 22px 50px rgba(0,0,0,.45);
+      transform: translateY(-2px);
+    }
+    .btn:hover{ filter: brightness(1.04); transform: translateY(-3px); }
+    .btn:active{ transform: translateY(2px); box-shadow: 0 4px 0 rgba(0,0,0,.26), 0 16px 30px rgba(0,0,0,.35); }
+    .btn-primary{
+      border-color: rgba(53,199,255,.38);
+      background: linear-gradient(135deg, rgba(53,199,255,.95), rgba(124,77,255,.95));
+      box-shadow: 0 10px 0 rgba(0,0,0,.26), 0 22px 55px rgba(53,199,255,.25);
+    }
+
+    .panel{
+      margin-top: 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-size: 34px;
+      letter-spacing: -0.6px;
+      line-height: 1.08;
+    }
+    .grad{
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
+    .meta{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+    h2{
+      margin: 18px 0 8px;
+      font-size: 16px;
+      letter-spacing: .2px;
+    }
+    p, li{
+      color: rgba(234,240,255,.86);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    ul{ margin: 8px 0 0 18px; }
+    a{ color: rgba(234,240,255,.92); }
+    .note{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.20);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-top: 14px;
+      color: rgba(234,240,255,.86);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    footer{
+      margin-top: 18px;
+      text-align:center;
+      color: rgba(234,240,255,.62);
+      font-size: 12px;
+      padding: 10px 0 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3 2 11h2v9h6v-6h4v6h6v-9h2L12 3z"/></svg>
+        </div>
+        <div class="title">
+          <strong>White’s Painting & Renovations</strong>
+          <span>Ukiah, CA • Free Estimates • Financing Available</span>
+        </div>
+      </div>
+
+      <a class="btn btn-primary" href="/">← Back to Website</a>
+    </div>
+
+    <main class="panel">
+      <h1><span class="grad">Privacy Policy</span></h1>
+      <div class="meta">
+        Effective Date: February 2026<br/>
+        This Privacy Policy explains how White’s Painting & Renovations (“we,” “us,” “our”) collects, uses, and protects your information.
+      </div>
+
+      <h2>Information We Collect</h2>
+      <p>We may collect information you provide directly to us, including:</p>
+      <ul>
+        <li>Name</li>
+        <li>Phone number</li>
+        <li>Email address (if provided)</li>
+        <li>Property address/city</li>
+        <li>Project details and notes</li>
+      </ul>
+      <p>We may also collect basic website usage information such as device type, browser type, and pages visited (often through cookies or analytics tools).</p>
+
+      <h2>How We Use Your Information</h2>
+      <p>We use your information to:</p>
+      <ul>
+        <li>Provide estimates and respond to inquiries</li>
+        <li>Schedule appointments and coordinate walkthroughs</li>
+        <li>Send project updates and customer service messages</li>
+        <li>Improve our website and services</li>
+      </ul>
+
+      <h2>SMS Messaging & Consent</h2>
+      <p>
+        If you provide your phone number and consent, you may receive SMS messages from us related to your estimate request, scheduling, and project updates.
+        Message frequency varies. Message &amp; data rates may apply. Reply STOP to unsubscribe or HELP for assistance.
+      </p>
+
+      <div class="note">
+        <strong>Mobile Information Sharing Statement:</strong>
+        No mobile information will be shared with third parties/affiliates for marketing or promotional purposes.
+        All categories exclude text messaging originator opt-in data and consent; this information will not be shared with any third parties.
+      </div>
+
+      <h2>Cookies & Tracking</h2>
+      <p>
+        Our website may use cookies and similar technologies to improve user experience and measure website performance. You can control cookies through your browser settings.
+      </p>
+
+      <h2>Data Security</h2>
+      <p>
+        We take reasonable measures to protect your information. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.
+      </p>
+
+      <h2>Your Rights</h2>
+      <p>
+        You may request access to, correction of, or deletion of your personal information by contacting us using the information below.
+      </p>
+
+      <h2>Contact Us</h2>
+      <p>
+        White’s Painting &amp; Renovations<br/>
+        Ukiah, CA<br/>
+        Phone: <a href="tel:+17078516910">(707) 851-6910</a>
+      </p>
+
+      <p class="meta" style="margin-top:18px;">
+        This policy may be updated from time to time. Any updates will be posted on this page with a revised effective date.
+      </p>
+    </main>
+
+    <footer>
+      © <span id="yr"></span> White’s Painting & Renovations • Ukiah, CA
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
