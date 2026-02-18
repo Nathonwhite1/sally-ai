@@ -55,59 +55,34 @@ async def terms_and_conditions_html(request: Request):
 # =========================
 @app.post("/web/lead")
 async def web_lead(payload: dict):
-    """
-    Expects JSON like:
-    {
-      "first_name": "Maria",
-      "phone": "(707) 555-1234",
-      "project_type": "Interior Painting",
-      "address": "123 Main St",
-      "city": "Ukiah",
-      "notes": "…",
-      "sms_consent": true/false
-    }
-    """
-    if not GHL_WEBHOOK_URL:
-        raise HTTPException(status_code=500, detail="Missing GHL_WEBHOOK_URL (set it in Render env vars).")
-
-    first_name = (payload.get("first_name") or "").strip()
-    phone = (payload.get("phone") or "").strip()
-    project_type = (payload.get("project_type") or "").strip()
-    address = (payload.get("address") or "").strip()
-    city = (payload.get("city") or "").strip()
-    notes = (payload.get("notes") or "").strip()
-    sms_consent = bool(payload.get("sms_consent"))
-
-    # Match your front-end required fields
-    if not phone or not project_type or not address or not city:
-        raise HTTPException(status_code=400, detail="Missing required fields")
+    ghl_url = (os.getenv("GHL_WEBHOOK_URL") or "").strip()
+    if not ghl_url:
+        raise HTTPException(status_code=500, detail="GHL_WEBHOOK_URL is not set in Render env vars.")
 
     webhook_payload = {
+        "first_name": (payload.get("first_name") or "").strip(),
+        "phone": (payload.get("phone") or "").strip(),
+        "project_type": (payload.get("project_type") or "").strip(),
+        "address": (payload.get("address") or "").strip(),
+        "city": (payload.get("city") or "").strip(),
+        "notes": (payload.get("notes") or "").strip(),
+        "sms_consent": bool(payload.get("sms_consent")),
         "source": "website",
-        "first_name": first_name,
-        "phone": phone,
-        "project_type": project_type,
-        "address": address,
-        "city": city,
-        "notes": notes,
-        "sms_consent": sms_consent,
-        "tags": [
-            "Website Lead",
-            f"Project: {project_type}" if project_type else "Project: Unknown",
-            "SMS Opt-In" if sms_consent else "NO SMS CONSENT",
-        ],
     }
 
+    # required fields
+    if not webhook_payload["phone"] or not webhook_payload["project_type"] or not webhook_payload["address"] or not webhook_payload["city"]:
+        raise HTTPException(status_code=400, detail="Missing required fields: phone, project_type, address, city")
+
     try:
-        r = requests.post(GHL_WEBHOOK_URL, json=webhook_payload, timeout=20)
-    except requests.RequestException as e:
-        raise HTTPException(status_code=502, detail=f"HighLevel webhook forward failed: {e}")
+        r = requests.post(ghl_url, json=webhook_payload, timeout=20)
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Forwarding failed: {type(e).__name__}: {e}")
 
     if not (200 <= r.status_code < 300):
-        raise HTTPException(status_code=502, detail=f"HighLevel webhook error {r.status_code}: {r.text}")
+        raise HTTPException(status_code=502, detail=f"HighLevel returned {r.status_code}: {r.text[:300]}")
 
-    # Return success to the browser either way
-    return JSONResponse({"ok": True})
+    return JSONResponse({"ok": True, "forward_status": r.status_code})
 
 
 # =========================
