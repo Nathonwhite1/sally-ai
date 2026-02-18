@@ -11,6 +11,22 @@
   <meta property="og:description" content="Free estimates • Financing available • Ukiah, CA" />
   <meta property="og:type" content="website" />
 
+  <!-- OPTIONAL: Meta Pixel (paste your real pixel base code here once created) -->
+  <!--
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','YOUR_PIXEL_ID_HERE');
+    fbq('track','PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"
+  /></noscript>
+  -->
+
   <style>
     :root{
       --bg:#070A0F;
@@ -343,6 +359,42 @@
     }
     textarea{ min-height: 96px; resize:vertical; }
 
+    .consentBox{
+      margin-top: 14px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.20);
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: rgba(234,240,255,.88);
+    }
+    .consentBox label{
+      margin:0;
+      font-size: 12.5px;
+      color: rgba(234,240,255,.88);
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .consentBox input[type="checkbox"]{
+      width:auto;
+      margin-top: 2px;
+      transform: scale(1.05);
+      accent-color: var(--accent);
+    }
+    .policyLinks{
+      margin-top: 10px;
+      font-size: 12px;
+      color: rgba(234,240,255,.72);
+    }
+    .policyLinks a{
+      color: rgba(234,240,255,.92);
+      text-decoration:none;
+      border-bottom: 1px solid rgba(234,240,255,.25);
+    }
+    .policyLinks a:hover{ opacity:.9; }
+
     .result{
       margin-top: 12px;
       padding: 10px 12px;
@@ -525,15 +577,15 @@
         <h3 class="formTitle">Free Estimate — Get Scheduled</h3>
         <p class="formSub">Fill this out. Sally will text you to set a walkthrough time.</p>
 
-        <form id="leadForm">
+        <form id="leadForm" novalidate>
           <div class="grid">
             <div>
               <label for="first_name">First Name</label>
-              <input id="first_name" name="first_name" placeholder="Your name" />
+              <input id="first_name" name="first_name" placeholder="Your name" autocomplete="given-name" />
             </div>
             <div>
               <label for="phone">Phone (required)</label>
-              <input id="phone" name="phone" placeholder="(707) 555-1234" required />
+              <input id="phone" name="phone" placeholder="(707) 555-1234" required autocomplete="tel" />
             </div>
           </div>
 
@@ -553,15 +605,33 @@
             </div>
             <div>
               <label for="city">City (required)</label>
-              <input id="city" name="city" placeholder="Ukiah" required />
+              <input id="city" name="city" placeholder="Ukiah" required autocomplete="address-level2" />
             </div>
           </div>
 
           <label for="address">Property Address (required)</label>
-          <input id="address" name="address" placeholder="123 Main St" required />
+          <input id="address" name="address" placeholder="123 Main St" required autocomplete="street-address" />
 
           <label for="notes">Notes (optional)</label>
           <textarea id="notes" name="notes" placeholder="Rooms, cabinets, timeline, etc."></textarea>
+
+          <!-- ✅ A2P OPT-IN (REQUIRED) -->
+          <div class="consentBox">
+            <label for="sms_consent">
+              <input type="checkbox" id="sms_consent" name="sms_consent" required />
+              <span>
+                By submitting this form, you agree to receive SMS messages from
+                <strong>White’s Painting & Renovations</strong> regarding your estimate request and project updates.
+                Message frequency varies. Message &amp; data rates may apply. Reply STOP to unsubscribe.
+              </span>
+            </label>
+
+            <div class="policyLinks">
+              <a href="/privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>
+              &nbsp;|&nbsp;
+              <a href="/terms-and-conditions.html" target="_blank" rel="noopener">Terms &amp; Conditions</a>
+            </div>
+          </div>
 
           <div class="ctaRow" style="margin-top:14px;">
             <button class="btn btn-primary" type="submit">Submit Request</button>
@@ -674,7 +744,7 @@
       </div>
     </section>
 
-    <!-- SERVICE AREA (kept minimal) -->
+    <!-- SERVICE AREA -->
     <section class="panel" id="areas">
       <div class="sectionHead">
         <div>
@@ -779,10 +849,16 @@
         address: document.getElementById("address").value.trim(),
         city: document.getElementById("city").value.trim(),
         notes: document.getElementById("notes").value.trim(),
+        sms_consent: document.getElementById("sms_consent").checked,
       };
 
       if (!payload.phone || !payload.project_type || !payload.address || !payload.city) {
         showResult("Please fill in all required fields.", false);
+        return;
+      }
+
+      if (!payload.sms_consent) {
+        showResult("Please check the SMS consent box to submit this request.", false);
         return;
       }
 
@@ -798,6 +874,9 @@
         if (res.ok && data.ok !== false) {
           showResult("Thank you! Sally will text you shortly to schedule your estimate.");
           e.target.reset();
+
+          // OPTIONAL: If you add your Meta Pixel above, you can track Lead here too.
+          // if (window.fbq) fbq('track', 'Lead');
         } else {
           showResult(data?.error || "Something went wrong. Please try again or call (707) 350-1569.", false);
         }

@@ -27,3 +27,13 @@ Thumbs.db
 # Local scratch
 payload.json
 test.jpg
+
+google_credentials.json
+token.json
+
+google_credentials.json
+test_calendar.py
+
+__pycache__/
+*.pyc
+
