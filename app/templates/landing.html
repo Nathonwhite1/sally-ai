@@ -11,22 +11,6 @@
   <meta property="og:description" content="Free estimates • Financing available • Ukiah, CA" />
   <meta property="og:type" content="website" />
 
-  <!-- OPTIONAL: Meta Pixel (paste your real pixel base code here once created) -->
-  <!--
-  <script>
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-    document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init','YOUR_PIXEL_ID_HERE');
-    fbq('track','PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"
-  /></noscript>
-  -->
-
   <style>
     :root{
       --bg:#070A0F;
@@ -615,21 +599,22 @@
           <label for="notes">Notes (optional)</label>
           <textarea id="notes" name="notes" placeholder="Rooms, cabinets, timeline, etc."></textarea>
 
-          <!-- ✅ A2P OPT-IN (REQUIRED) -->
+          <!-- ✅ A2P OPT-IN -->
           <div class="consentBox">
             <label for="sms_consent">
               <input type="checkbox" id="sms_consent" name="sms_consent" required />
               <span>
-                By submitting this form, you agree to receive SMS messages from
-                <strong>White’s Painting & Renovations</strong> regarding your estimate request and project updates.
+                By checking this box, you agree to receive SMS messages from
+                <strong>White’s Painting & Renovations</strong> regarding your estimate request and project updates
+                (including estimate confirmations and scheduling communication).
                 Message frequency varies. Message &amp; data rates may apply. Reply STOP to unsubscribe.
               </span>
             </label>
 
             <div class="policyLinks">
-              <a href="/privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>
+              <a href="/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
               &nbsp;|&nbsp;
-              <a href="/terms-and-conditions.html" target="_blank" rel="noopener">Terms &amp; Conditions</a>
+              <a href="/terms-and-conditions" target="_blank" rel="noopener">Terms &amp; Conditions</a>
             </div>
           </div>
 
@@ -874,9 +859,6 @@
         if (res.ok && data.ok !== false) {
           showResult("Thank you! Sally will text you shortly to schedule your estimate.");
           e.target.reset();
-
-          // OPTIONAL: If you add your Meta Pixel above, you can track Lead here too.
-          // if (window.fbq) fbq('track', 'Lead');
         } else {
           showResult(data?.error || "Something went wrong. Please try again or call (707) 350-1569.", false);
         }
