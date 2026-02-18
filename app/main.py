@@ -1,7 +1,4 @@
-﻿# app/main.py  (replace your file with this whole thing)
-
-import os
-import re
+﻿import os
 import requests
 
 from fastapi import FastAPI, Request, Form, HTTPException
@@ -11,43 +8,33 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-
-def normalize_phone(phone: str) -> str:
-    """Normalize US phone to E.164 (+1XXXXXXXXXX)."""
-    raw = (phone or "").strip()
-    if raw.startswith("+"):
-        # strip spaces just in case
-        return re.sub(r"\s+", "", raw)
-    digits = re.sub(r"\D+", "", raw)
-    if len(digits) == 10:
-        return "+1" + digits
-    if len(digits) == 11 and digits.startswith("1"):
-        return "+" + digits
-    return ""
+# =========================
+# ENV
+# =========================
+GHL_WEBHOOK_URL = (os.getenv("GHL_WEBHOOK_URL") or "").strip()
 
 
+# =========================
+# DEBUG
+# =========================
 @app.get("/__debug_env", response_class=JSONResponse)
 async def __debug_env():
     v = (os.getenv("GHL_WEBHOOK_URL") or "").strip()
     return {
         "has_GHL_WEBHOOK_URL": bool(v),
-        "GHL_WEBHOOK_URL_preview": (v[:80] + "...") if len(v) > 80 else v,
+        "GHL_WEBHOOK_URL_preview": (v[:80] + "...") if len(v) > 80 else v
     }
 
 
-# HighLevel Inbound Webhook URL (set in Render env vars)
-GHL_WEBHOOK_URL = os.getenv("GHL_WEBHOOK_URL", "").strip()
-
-
-# Debug: list all routes currently registered (useful for Render)
 @app.get("/__routes", response_class=JSONResponse)
 async def __routes():
     return {"routes": sorted([getattr(r, "path", "") for r in app.routes])}
 
 
-# Serve /static/* from app/static
+# =========================
+# STATIC + TEMPLATES
+# =========================
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
-
 templates = Jinja2Templates(directory="app/templates")
 
 
@@ -59,7 +46,6 @@ async def landing(request: Request):
     return templates.TemplateResponse("landing.html", {"request": request})
 
 
-# Privacy Policy (support both /privacy-policy and /privacy-policy.html)
 @app.get("/privacy-policy", response_class=HTMLResponse)
 async def privacy_policy(request: Request):
     return templates.TemplateResponse("privacy-policy.html", {"request": request})
@@ -70,7 +56,6 @@ async def privacy_policy_html(request: Request):
     return templates.TemplateResponse("privacy-policy.html", {"request": request})
 
 
-# Terms (support both /terms-and-conditions and /terms-and-conditions.html)
 @app.get("/terms-and-conditions", response_class=HTMLResponse)
 async def terms_and_conditions(request: Request):
     return templates.TemplateResponse("terms-and-conditions.html", {"request": request})
@@ -83,6 +68,7 @@ async def terms_and_conditions_html(request: Request):
 
 # =========================
 # WEB LEAD SUBMISSION (FORWARD TO HIGHLEVEL INBOUND WEBHOOK)
+# IMPORTANT: includes optional email fallback so HL can create contact even if phone mapping glitches
 # =========================
 @app.post("/web/lead")
 async def web_lead(payload: dict):
@@ -90,23 +76,35 @@ async def web_lead(payload: dict):
     if not ghl_url:
         raise HTTPException(status_code=500, detail="GHL_WEBHOOK_URL is not set in Render env vars.")
 
-    phone = normalize_phone(payload.get("phone") or "")
-    webhook_payload = {
-        "first_name": (payload.get("first_name") or "").strip(),
-        "phone": phone,  # ✅ E.164 format for HighLevel
-        "project_type": (payload.get("project_type") or "").strip(),
-        "address": (payload.get("address") or "").strip(),
-        "city": (payload.get("city") or "").strip(),
-        "notes": (payload.get("notes") or "").strip(),
-        "sms_consent": bool(payload.get("sms_consent")),
-        "source": "website",
-    }
+    # Pull + normalize fields
+    first_name = (payload.get("first_name") or "").strip()
+    phone = (payload.get("phone") or "").strip()
+    email = (payload.get("email") or "").strip()  # optional but helps HL differentiation
+    project_type = (payload.get("project_type") or "").strip()
+    address = (payload.get("address") or "").strip()
+    city = (payload.get("city") or "").strip()
+    notes = (payload.get("notes") or "").strip()
+    sms_consent = bool(payload.get("sms_consent"))
 
-    # required fields
-    if not webhook_payload["phone"]:
-        raise HTTPException(status_code=400, detail="Invalid phone number. Please enter a valid US phone.")
-    if not webhook_payload["project_type"] or not webhook_payload["address"] or not webhook_payload["city"]:
+    # Website required fields (keep your existing requirements)
+    if not project_type or not address or not city:
         raise HTTPException(status_code=400, detail="Missing required fields: project_type, address, city")
+
+    # HighLevel differentiation requirement (needs at least one of email or phone)
+    if not phone and not email:
+        raise HTTPException(status_code=400, detail="Missing required field: phone or email")
+
+    webhook_payload = {
+        "source": "website",
+        "first_name": first_name,
+        "phone": phone,
+        "email": email,
+        "project_type": project_type,
+        "address": address,
+        "city": city,
+        "notes": notes,
+        "sms_consent": sms_consent,
+    }
 
     try:
         r = requests.post(ghl_url, json=webhook_payload, timeout=20)
@@ -140,6 +138,5 @@ async def sms_webhook(
 # =========================
 # VOICE ROUTES
 # =========================
-from app.voice.routes import router as voice_router  # noqa: E402
-
+from app.voice.routes import router as voice_router
 app.include_router(voice_router, prefix="/voice")
