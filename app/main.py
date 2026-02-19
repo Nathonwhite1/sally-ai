@@ -1,4 +1,5 @@
-﻿import os
+﻿# app/main.py
+import os
 import re
 import requests
 
@@ -9,23 +10,32 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-# -------------------------
-# Config
-# -------------------------
-GHL_WEBHOOK_URL = (os.getenv("GHL_WEBHOOK_URL") or "").strip()
-
 # Serve /static/* from app/static
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
-
 templates = Jinja2Templates(directory="app/templates")
 
 
-# -------------------------
-# Debug helpers
-# -------------------------
-@app.get("/__routes", response_class=JSONResponse)
-async def __routes():
-    return {"routes": sorted([getattr(r, "path", "") for r in app.routes])}
+def normalize_phone(raw: str) -> str:
+    """Return digits-only phone, keep leading 1 for US if 11 digits."""
+    if not raw:
+        return ""
+    digits = re.sub(r"\D+", "", raw)
+    # If they typed 10 digits, assume US number; if 11 digits and starts with 1, keep it.
+    if len(digits) == 10:
+        return digits
+    if len(digits) == 11 and digits.startswith("1"):
+        return digits
+    return digits  # best effort
+
+
+def fallback_email_from_phone(phone_digits: str) -> str:
+    """
+    HighLevel sometimes needs an Email or Phone. We always send Phone anyway.
+    But if user didn't provide email, this gives a stable placeholder.
+    """
+    if not phone_digits:
+        return ""
+    return f"lead+{phone_digits}@whitespaintingandrenovations.com"
 
 
 @app.get("/__debug_env", response_class=JSONResponse)
@@ -37,38 +47,14 @@ async def __debug_env():
     }
 
 
-def normalize_phone(phone: str) -> str:
-    """
-    Normalize US numbers to E.164:
-      (707) 350-1569 -> +17073501569
-      17073501569    -> +17073501569
-    """
-    s = (phone or "").strip()
-    digits = re.sub(r"\D+", "", s)
-
-    if len(digits) == 10:
-        return "+1" + digits
-    if len(digits) == 11 and digits.startswith("1"):
-        return "+" + digits
-    if s.startswith("+") and len(digits) >= 10:
-        return "+" + digits
-    return ""
+@app.get("/__routes", response_class=JSONResponse)
+async def __routes():
+    return {"routes": sorted([getattr(r, "path", "") for r in app.routes])}
 
 
-def fallback_email_from_phone(phone_e164: str) -> str:
-    """
-    HighLevel contact create/update sometimes behaves better if email exists.
-    This creates a harmless placeholder email if none provided.
-    """
-    digits = re.sub(r"\D+", "", phone_e164 or "")
-    if not digits:
-        return ""
-    return f"lead-{digits}@whitespaintingandrenovations.invalid"
-
-
-# -------------------------
-# Pages
-# -------------------------
+# =========================
+# PAGES
+# =========================
 @app.get("/", response_class=HTMLResponse)
 async def landing(request: Request):
     return templates.TemplateResponse("landing.html", {"request": request})
@@ -94,9 +80,9 @@ async def terms_and_conditions_html(request: Request):
     return templates.TemplateResponse("terms-and-conditions.html", {"request": request})
 
 
-# -------------------------
+# =========================
 # WEB LEAD SUBMISSION -> HIGHLEVEL INBOUND WEBHOOK
-# -------------------------
+# =========================
 @app.post("/web/lead", response_class=JSONResponse)
 async def web_lead(payload: dict):
     ghl_url = (os.getenv("GHL_WEBHOOK_URL") or "").strip()
@@ -116,18 +102,15 @@ async def web_lead(payload: dict):
     notes = (payload.get("notes") or "").strip()
     sms_consent = bool(payload.get("sms_consent"))
 
-    # Required fields (match what you enforce on the front-end)
+    # required fields (keep these strict so you don’t get junk leads)
     if not phone or not project_type or not address or not city:
-        raise HTTPException(
-            status_code=400,
-            detail="Missing required fields: phone, project_type, address, city",
-        )
+        raise HTTPException(status_code=400, detail="Missing required fields: phone, project_type, address, city")
 
     webhook_payload = {
         "source": "website",
         "first_name": first_name,
-        "phone": phone,          # E.164 for consistency
-        "email": email,          # placeholder if empty
+        "phone": phone,
+        "email": email,
         "project_type": project_type,
         "address": address,
         "city": city,
@@ -137,18 +120,18 @@ async def web_lead(payload: dict):
 
     try:
         r = requests.post(ghl_url, json=webhook_payload, timeout=20)
-    except requests.RequestException as e:
+    except Exception as e:
         raise HTTPException(status_code=502, detail=f"Forwarding failed: {type(e).__name__}: {e}")
 
     if not (200 <= r.status_code < 300):
-        raise HTTPException(status_code=502, detail=f"HighLevel returned {r.status_code}: {r.text[:500]}")
+        raise HTTPException(status_code=502, detail=f"HighLevel returned {r.status_code}: {r.text[:300]}")
 
-    return JSONResponse({"ok": True, "forward_status": r.status_code})
+    return {"ok": True, "forward_status": r.status_code}
 
 
-# -------------------------
+# =========================
 # SMS WEBHOOK (Twilio)
-# -------------------------
+# =========================
 @app.post("/sms", response_class=PlainTextResponse)
 async def sms_webhook(
     From: str = Form(None),
@@ -164,8 +147,9 @@ async def sms_webhook(
     )
 
 
-# -------------------------
+# =========================
 # VOICE ROUTES
-# -------------------------
-from app.voice.routes import router as voice_router
+# =========================
+from app.voice.routes import router as voice_router  # noqa: E402
+
 app.include_router(voice_router, prefix="/voice")

@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿<!-- app/templates/landing.html -->
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -6,7 +7,6 @@
   <title>White’s Painting & Renovations | Ukiah, CA | Free Estimates</title>
   <meta name="description" content="White’s Painting & Renovations in Ukiah, CA. Interior/exterior painting, cabinets, drywall, flooring, remodel support. Free estimates. Financing available." />
 
-  <!-- Optional: social preview -->
   <meta property="og:title" content="White’s Painting & Renovations" />
   <meta property="og:description" content="Free estimates • Financing available • Ukiah, CA" />
   <meta property="og:type" content="website" />
@@ -16,8 +16,6 @@
       --bg:#070A0F;
       --text:#EAF0FF;
       --muted:rgba(234,240,255,.72);
-      --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.10);
       --stroke:rgba(255,255,255,.14);
       --shadow:0 22px 70px rgba(0,0,0,.50);
       --radius:22px;
@@ -41,7 +39,6 @@
       overflow-x:hidden;
     }
 
-    /* ===== BACKGROUND ===== */
     .bg{
       position:fixed;
       inset:0;
@@ -67,7 +64,6 @@
       padding: 18px 16px 80px;
     }
 
-    /* ===== NAV ===== */
     .nav{
       position: sticky;
       top: 12px;
@@ -171,7 +167,6 @@
     }
     .mobileMenu a:last-child{ margin-bottom: 0; }
 
-    /* ===== 3D BUTTONS ===== */
     .btn{
       appearance:none;
       border:1px solid rgba(255,255,255,0.18);
@@ -214,7 +209,6 @@
       border-color: rgba(255,255,255,.16);
     }
 
-    /* ===== SECTIONS ===== */
     section{ margin-top: 18px; }
     .panel{
       border-radius: var(--radius);
@@ -314,7 +308,6 @@
     .stat strong{ display:block; font-size: 16px; margin-bottom: 4px; }
     .stat span{ color: var(--muted); font-size: 12px; }
 
-    /* ===== FORM ===== */
     .formTitle{ margin:0 0 6px; font-size: 18px; letter-spacing:.2px; }
     .formSub{ margin:0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.45; }
 
@@ -389,94 +382,6 @@
       font-size: 13px;
     }
 
-    /* ===== SECTION HEADERS ===== */
-    .sectionHead{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-    .sectionHead h2{
-      margin:0;
-      font-size: 22px;
-      letter-spacing:-.2px;
-    }
-    .sectionHead p{
-      margin:0;
-      color: var(--muted);
-      font-size: 13px;
-      max-width: 64ch;
-      line-height: 1.5;
-    }
-    @media (max-width: 900px){
-      .sectionHead{ flex-direction:column; align-items:flex-start; }
-    }
-
-    /* ===== CARDS ===== */
-    .cards4{
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-    @media (max-width: 900px){ .cards4{ grid-template-columns:1fr 1fr; } }
-    @media (max-width: 520px){ .cards4{ grid-template-columns:1fr; } }
-
-    .card{
-      border-radius: 18px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.20);
-      padding: 14px;
-      min-height: 116px;
-    }
-    .card strong{ display:block; font-size: 14px; margin-bottom: 6px; }
-    .card p{ margin:0; color: var(--muted); font-size: 12px; line-height: 1.45; }
-
-    .cards3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-    @media (max-width: 900px){ .cards3{ grid-template-columns:1fr; } }
-
-    /* ===== GALLERY ===== */
-    .gallery{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 10px;
-    }
-    @media (max-width: 900px){ .gallery{ grid-template-columns:1fr; } }
-    .ph{
-      border-radius: 18px;
-      border:1px dashed rgba(255,255,255,.22);
-      background: rgba(0,0,0,.18);
-      min-height: 220px;
-      overflow:hidden;
-    }
-    .ph img{
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      display:block;
-    }
-
-    /* ===== FAQ ===== */
-    details{
-      border-radius: 18px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.20);
-      padding: 12px 14px;
-    }
-    details + details{ margin-top: 10px; }
-    summary{
-      cursor:pointer;
-      font-weight: 900;
-      list-style:none;
-    }
-    summary::-webkit-details-marker{ display:none; }
-    details p{ color: var(--muted); margin: 10px 0 0; font-size: 13px; line-height: 1.55; }
-
-    /* ===== FOOTER ===== */
     footer{
       margin-top: 18px;
       text-align:center;
@@ -492,7 +397,6 @@
   <div class="bg" aria-hidden="true"></div>
 
   <div class="wrap">
-    <!-- NAV -->
     <div class="nav">
       <div class="brand">
         <div class="logo" aria-hidden="true">
@@ -507,27 +411,16 @@
       <button class="menuBtn" id="menuBtn" type="button">☰ Menu</button>
 
       <div class="navlinks" aria-label="Primary navigation">
-        <a href="#services">Services</a>
-        <a href="#process">Process</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#areas">Service Area</a>
-        <a href="#faq">FAQ</a>
         <a href="#estimate">Estimate</a>
         <a href="tel:+17078516910">Call</a>
       </div>
     </div>
 
     <div class="mobileMenu" id="mobileMenu">
-      <a href="#services">Services</a>
-      <a href="#process">Process</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#areas">Service Area</a>
-      <a href="#faq">FAQ</a>
       <a href="#estimate">Get Estimate</a>
       <a href="tel:+17078516910">Call (707) 851-6910</a>
     </div>
 
-    <!-- HERO + FORM -->
     <section class="hero" id="top">
       <div class="panel heroLeft">
         <div class="kicker"><span class="dot"></span> Clean work • Clear pricing • Fast scheduling</div>
@@ -575,6 +468,10 @@
 
           <div class="grid">
             <div>
+              <label for="email">Email (optional)</label>
+              <input id="email" name="email" type="email" placeholder="you@email.com" autocomplete="email" />
+            </div>
+            <div>
               <label for="project_type">Project Type (required)</label>
               <select id="project_type" name="project_type" required>
                 <option value="">Select…</option>
@@ -587,25 +484,28 @@
                 <option>Other</option>
               </select>
             </div>
+          </div>
+
+          <div class="grid">
             <div>
               <label for="city">City (required)</label>
               <input id="city" name="city" placeholder="Ukiah" required autocomplete="address-level2" />
             </div>
+            <div>
+              <label for="address">Property Address (required)</label>
+              <input id="address" name="address" placeholder="123 Main St" required autocomplete="street-address" />
+            </div>
           </div>
-
-          <label for="address">Property Address (required)</label>
-          <input id="address" name="address" placeholder="123 Main St" required autocomplete="street-address" />
 
           <label for="notes">Notes (optional)</label>
           <textarea id="notes" name="notes" placeholder="Rooms, cabinets, timeline, etc."></textarea>
 
-          <!-- ✅ A2P OPT-IN -->
           <div class="consentBox">
             <label for="sms_consent">
               <input type="checkbox" id="sms_consent" name="sms_consent">
               <span>
-               By checking this box, you agree to receive informational SMS messages from White’s Painting & Renovations regarding your estimate request, appointment reminders, scheduling updates, and project communication. Message frequency varies. Message & data rates may apply. Reply STOP to unsubscribe or HELP for help.
-
+                By checking this box, you agree to receive informational SMS messages from White’s Painting & Renovations regarding your estimate request, appointment reminders, scheduling updates, and project communication.
+                Message frequency varies. Message & data rates may apply. Reply STOP to unsubscribe or HELP for help.
               </span>
             </label>
 
@@ -626,244 +526,70 @@
       </aside>
     </section>
 
-    <!-- SERVICES -->
-    <section class="panel" id="services">
-      <div class="sectionHead">
-        <div>
-          <h2>Services</h2>
-          <p>Everything you need for a clean, updated look — from prep to final coat.</p>
-        </div>
-        <a class="btn btn-primary" href="#estimate">Request Estimate</a>
-      </div>
-
-      <div class="cards4">
-        <div class="card">
-          <strong>Interior Painting</strong>
-          <p>Walls, ceilings, doors & trim. Crisp lines, smooth finish, clean protection.</p>
-        </div>
-        <div class="card">
-          <strong>Exterior Painting</strong>
-          <p>Scrape, sand, prime, caulk, and durable coatings to protect your home.</p>
-        </div>
-        <div class="card">
-          <strong>Cabinet Refinishing</strong>
-          <p>Proper prep + sprayed/brush finish for a factory-smooth cabinet look.</p>
-        </div>
-        <div class="card">
-          <strong>Drywall + Repairs</strong>
-          <p>Patches, texture match, corner beads, water stains, and paint blending.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- GALLERY -->
-    <section class="panel" id="gallery">
-      <div class="sectionHead">
-        <div>
-          <h2>Recent Work</h2>
-          <p>Add 4–8 photos here and this instantly feels like a real, high-end company site.</p>
-        </div>
-        <a class="btn btn-ghost" href="#estimate">Get on the Schedule</a>
-      </div>
-
-      <div class="gallery">
-        <div class="ph"><img src="/static/interior1.jpg" alt="Interior Painting Project" /></div>
-        <div class="ph"><img src="/static/interior2.jpg" alt="Interior Wall and Trim Painting" /></div>
-      </div>
-
-      <div class="gallery" style="margin-top:10px;">
-        <div class="ph"><img src="/static/cabinets1.jpg" alt="Cabinet Refinishing Before and After" /></div>
-        <div class="ph"><img src="/static/exterior1.jpg" alt="Exterior House Painting" /></div>
-      </div>
-    </section>
-
-    <!-- PROCESS -->
-    <section class="panel" id="process">
-      <div class="sectionHead">
-        <div>
-          <h2>Our Process</h2>
-          <p>Simple, professional, and consistent — so you always know what’s happening.</p>
-        </div>
-      </div>
-
-      <div class="cards3">
-        <div class="card">
-          <strong>1) Quick Intake</strong>
-          <p>You submit the form (or call/text). We confirm details and schedule a walkthrough.</p>
-        </div>
-        <div class="card">
-          <strong>2) Walkthrough + Estimate</strong>
-          <p>We measure, note prep needs, and provide a clear scope of work.</p>
-        </div>
-        <div class="card">
-          <strong>3) Prep + Finish</strong>
-          <p>Protect surfaces, prep properly, paint, detail, and clean up like we were never there.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- REVIEWS -->
-    <section class="panel" id="reviews">
-      <div class="sectionHead">
-        <div>
-          <h2>What Customers Say</h2>
-          <p></p>
-        </div>
-      </div>
-
-      <div class="cards3">
-        <div class="card">
-          <strong>“Super clean work and great communication.”</strong>
-          <p>They protected everything, finished fast, and the lines are perfect.</p>
-        </div>
-        <div class="card">
-          <strong>“Cabinets look brand new.”</strong>
-          <p>The finish is smooth and the hardware/install was clean.</p>
-        </div>
-        <div class="card">
-          <strong>“On time, professional, and worth it.”</strong>
-          <p>Showed up when they said they would and kept the jobsite tidy.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SERVICE AREA -->
-    <section class="panel" id="areas">
-      <div class="sectionHead">
-        <div>
-          <h2>Service Area</h2>
-          <p>Ukiah and surrounding areas in Mendocino & Lake County.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="panel" id="faq">
-      <div class="sectionHead">
-        <div>
-          <h2>FAQ</h2>
-          <p></p>
-        </div>
-      </div>
-
-      <details>
-        <summary>Do you offer free estimates?</summary>
-        <p>Yes. Submit the form or call/text and we’ll schedule a walkthrough.</p>
-      </details>
-      <details>
-        <summary>Do you offer financing?</summary>
-        <p>Yes — financing is available to qualified customers.</p>
-      </details>
-      <details>
-        <summary>How soon can you start?</summary>
-        <p>It depends on current scheduling and project size. We’ll give you a clear timeline after the walkthrough.</p>
-      </details>
-      <details>
-        <summary>Do you do prep work and repairs?</summary>
-        <p>Yes. Proper prep is where quality comes from: scraping, sanding, caulking, priming, patching, and protecting surfaces.</p>
-      </details>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="panel" id="contact">
-      <div class="sectionHead">
-        <div>
-          <h2>Contact</h2>
-          <p>Call us or text Sally to schedule your estimate.</p>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn btn-primary" href="tel:+17078516910">Call (707) 851-6910</a>
-          <a class="btn btn-ghost" href="sms:+17078516910?body=Hi%20Sally%20%E2%80%94%20I%20need%20an%20estimate.">Text Sally (707) 851-6910</a>
-        </div>
-      </div>
-
-      <div class="cards3">
-        <div class="card">
-          <strong>Phone</strong>
-          <p><a href="tel:+17078516910" style="color:rgba(234,240,255,.92);text-decoration:none;">(707) 851-6910</a></p>
-        </div>
-        <div class="card">
-          <strong>Text Sally</strong>
-          <p><a href="sms:+17078516910?body=Hi%20Sally%20%E2%80%94%20I%20need%20an%20estimate." style="color:rgba(234,240,255,.92);text-decoration:none;">(707) 851-6910</a></p>
-        </div>
-        <div class="card">
-          <strong>Location</strong>
-          <p>Ukiah, CA</p>
-        </div>
-      </div>
-    </section>
-
     <footer>
       © <span id="yr"></span> White’s Painting & Renovations • Ukiah, CA
       <div class="fine">Free Estimates • Financing Available</div>
     </footer>
   </div>
 
- 
-<script>
-  // Year
-  document.getElementById("yr").textContent = new Date().getFullYear();
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
 
-  // Mobile menu toggle
-  const menuBtn = document.getElementById("menuBtn");
-  const mobileMenu = document.getElementById("mobileMenu");
-  menuBtn?.addEventListener("click", () => {
-    const isOpen = mobileMenu.style.display === "block";
-    mobileMenu.style.display = isOpen ? "none" : "block";
-  });
-  mobileMenu?.querySelectorAll("a").forEach(a =>
-    a.addEventListener("click", () => (mobileMenu.style.display = "none"))
-  );
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    menuBtn?.addEventListener("click", () => {
+      const isOpen = mobileMenu.style.display === "block";
+      mobileMenu.style.display = isOpen ? "none" : "block";
+    });
+    mobileMenu?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mobileMenu.style.display="none"));
 
-  // Lead form submit
-  const API_URL = "/web/lead";
+    const API_URL = "/web/lead";
 
-  function showResult(msg, ok = true) {
-    const el = document.getElementById("result");
-    el.style.display = "block";
-    el.style.borderColor = ok ? "rgba(0,255,168,.35)" : "rgba(255,77,109,.45)";
-    el.innerHTML = msg;
-  }
-
-  document.getElementById("leadForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const payload = {
-      first_name: document.getElementById("first_name").value.trim(),
-      phone: document.getElementById("phone").value.trim(),
-      project_type: document.getElementById("project_type").value.trim(),
-      address: document.getElementById("address").value.trim(),
-      city: document.getElementById("city").value.trim(),
-      notes: document.getElementById("notes").value.trim(),
-      sms_consent: document.getElementById("sms_consent").checked,
-      email: "" // optional, backend will generate fallback if empty
-    };
-
-    if (!payload.phone || !payload.project_type || !payload.address || !payload.city) {
-      showResult("Please fill in all required fields.", false);
-      return;
+    function showResult(msg, ok=true){
+      const el = document.getElementById("result");
+      el.style.display = "block";
+      el.style.borderColor = ok ? "rgba(0,255,168,.35)" : "rgba(255,77,109,.45)";
+      el.innerHTML = msg;
     }
 
-    try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+    document.getElementById("leadForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-      const data = await res.json().catch(() => ({}));
+      const payload = {
+        first_name: document.getElementById("first_name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        project_type: document.getElementById("project_type").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        notes: document.getElementById("notes").value.trim(),
+        sms_consent: document.getElementById("sms_consent").checked,
+      };
 
-      if (res.ok && data.ok !== false) {
-        showResult("Thank you! Sally will text you shortly to schedule your estimate.");
-        e.target.reset();
-      } else {
-        showResult(
-          data?.detail || data?.error || "Something went wrong. Please try again or call (707) 851-6910.",
-          false
-        );
+      if (!payload.phone || !payload.project_type || !payload.address || !payload.city) {
+        showResult("Please fill in all required fields.", false);
+        return;
       }
-    } catch (err) {
-      showResult("Network error. Please try again or call (707) 851-6910.", false);
-    }
-  });
-</script>
+
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type":"application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json().catch(()=>({}));
+
+        if (res.ok && data.ok !== false) {
+          showResult("Thank you! Sally will text you shortly to schedule your estimate.");
+          e.target.reset();
+        } else {
+          showResult((data && (data.detail || data.error)) ? (data.detail || data.error) : "Something went wrong. Please try again or call (707) 851-6910.", false);
+        }
+      } catch (err) {
+        showResult("Network error. Please try again or call (707) 851-6910.", false);
+      }
+    });
+  </script>
+</body>
+</html>
