@@ -1,13 +1,35 @@
-<!-- ==============================
-     FILE: terms-and-conditions.html
-     ============================== -->
+<!-- app/templates/landing.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Terms & Conditions | White’s Painting & Renovations</title>
-  <meta name="description" content="Terms & Conditions for White’s Painting & Renovations (Ukiah, CA), including SMS messaging terms." />
+  <title>White’s Painting & Renovations | Ukiah, CA | Free Estimates</title>
+  <meta name="description" content="White’s Painting & Renovations in Ukiah, CA. Interior/exterior painting, cabinets, drywall, flooring, remodel support. Free estimates. Financing available." />
+
+  <meta property="og:title" content="White’s Painting & Renovations" />
+  <meta property="og:description" content="Free estimates • Financing available • Ukiah, CA" />
+  <meta property="og:type" content="website" />
+
+  <!-- Meta Pixel Code (Your Pixel) -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', '1416475723549594');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1416475723549594&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Meta Pixel Code -->
 
   <style>
     :root{
@@ -21,11 +43,14 @@
       --brand:#35C7FF;
       --brand2:#7C4DFF;
       --accent:#00FFA8;
-      --max:980px;
+      --danger:#FF4D6D;
+
+      --max:1160px;
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
+    html{ scroll-behavior:smooth; }
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
@@ -39,22 +64,24 @@
       inset:0;
       z-index:-2;
       background:
-        radial-gradient(1100px 900px at 15% 10%, rgba(53,199,255,.20), transparent 60%),
-        radial-gradient(900px 700px at 85% 18%, rgba(124,77,255,.20), transparent 55%),
-        radial-gradient(900px 900px at 50% 92%, rgba(0,255,168,.10), transparent 60%);
+        radial-gradient(1100px 900px at 15% 10%, rgba(53,199,255,.22), transparent 60%),
+        radial-gradient(900px 700px at 85% 18%, rgba(124,77,255,.22), transparent 55%),
+        radial-gradient(900px 900px at 50% 92%, rgba(0,255,168,.12), transparent 60%),
+        url("/static/exterior2.jpg") center/cover no-repeat fixed;
+      filter:saturate(1.12) contrast(1.05);
     }
     .bg::after{
       content:"";
       position:absolute;
       inset:0;
-      background: linear-gradient(180deg, rgba(7,10,15,.86), rgba(7,10,15,.94));
+      background: linear-gradient(180deg, rgba(7,10,15,.78), rgba(7,10,15,.92));
       z-index:1;
     }
 
     .wrap{
       max-width: var(--max);
       margin: 0 auto;
-      padding: 22px 16px 70px;
+      padding: 18px 16px 80px;
     }
 
     .nav{
@@ -73,7 +100,10 @@
       box-shadow: 0 18px 70px rgba(0,0,0,.35);
     }
 
-    .brand{ display:flex; align-items:center; gap:12px; }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      min-width: 240px;
+    }
     .logo{
       width:44px; height:44px;
       border-radius: 14px;
@@ -84,42 +114,123 @@
       flex:0 0 auto;
     }
     .logo svg{ width:24px; height:24px; fill:#fff; opacity:.95; }
+
     .brand .title{ line-height:1.12; }
-    .brand .title strong{ display:block; font-size: 14px; letter-spacing:.2px; }
-    .brand .title span{ display:block; font-size: 12px; color: var(--muted); }
+    .brand .title strong{
+      display:block;
+      font-size: 14px;
+      letter-spacing:.2px;
+    }
+    .brand .title span{
+      display:block;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .navlinks{
+      display:flex; gap: 10px; align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .navlinks a{
+      color: rgba(234,240,255,.9);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing:.2px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      text-decoration:none;
+      transition: transform .12s ease, background .12s ease;
+    }
+    .navlinks a:hover{ background: rgba(255,255,255,.08); transform: translateY(-1px); }
+
+    .menuBtn{
+      display:none;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-weight: 800;
+      cursor:pointer;
+    }
+
+    @media (max-width: 900px){
+      .nav{ border-radius: 18px; }
+      .navlinks{ display:none; }
+      .menuBtn{ display:inline-flex; align-items:center; gap:8px; }
+      .brand{ min-width:auto; }
+    }
+
+    .mobileMenu{
+      display:none;
+      margin-top: 10px;
+      border-radius: 18px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 70px rgba(0,0,0,.35);
+      padding: 10px;
+    }
+    .mobileMenu a{
+      display:block;
+      padding: 12px 12px;
+      border-radius: 14px;
+      color: rgba(234,240,255,.92);
+      text-decoration:none;
+      font-weight:800;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      margin-bottom: 8px;
+    }
+    .mobileMenu a:last-child{ margin-bottom: 0; }
 
     .btn{
       appearance:none;
       border:1px solid rgba(255,255,255,0.18);
-      padding: 12px 14px;
+      padding: 13px 16px;
       border-radius: 999px;
-      background: rgba(0,0,0,.22);
+      background: rgba(255,255,255,0.06);
       color: var(--text);
       font-weight: 900;
       font-size: 13px;
       letter-spacing:.2px;
       cursor:pointer;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
-      transition: transform .12s ease, filter .12s ease;
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
       box-shadow:
         0 10px 0 rgba(0,0,0,.26),
         0 22px 50px rgba(0,0,0,.45);
       transform: translateY(-2px);
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+      white-space:nowrap;
     }
     .btn:hover{ filter: brightness(1.04); transform: translateY(-3px); }
-    .btn:active{ transform: translateY(2px); box-shadow: 0 4px 0 rgba(0,0,0,.26), 0 16px 30px rgba(0,0,0,.35); }
+    .btn:active{
+      transform: translateY(2px);
+      box-shadow:
+        0 4px 0 rgba(0,0,0,.26),
+        0 16px 30px rgba(0,0,0,.35);
+    }
     .btn-primary{
       border-color: rgba(53,199,255,.38);
       background: linear-gradient(135deg, rgba(53,199,255,.95), rgba(124,77,255,.95));
-      box-shadow: 0 10px 0 rgba(0,0,0,.26), 0 22px 55px rgba(53,199,255,.25);
+      box-shadow:
+        0 10px 0 rgba(0,0,0,.26),
+        0 22px 55px rgba(53,199,255,.25);
+    }
+    .btn-ghost{
+      background: rgba(0,0,0,.22);
+      border-color: rgba(255,255,255,.16);
     }
 
+    section{ margin-top: 18px; }
     .panel{
-      margin-top: 16px;
       border-radius: var(--radius);
       border: 1px solid var(--stroke);
       background: rgba(255,255,255,.06);
@@ -128,46 +239,169 @@
       padding: 22px;
     }
 
-    h1{
-      margin:0 0 10px;
-      font-size: 34px;
-      letter-spacing: -0.6px;
-      line-height: 1.08;
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      align-items:stretch;
+      margin-top: 16px;
     }
-    .grad{
+    @media (max-width: 900px){ .hero{ grid-template-columns:1fr; } }
+
+    .heroLeft{ position:relative; overflow:hidden; }
+    .heroLeft::before{
+      content:"";
+      position:absolute;
+      inset:-120px;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(53,199,255,.18), transparent 55%),
+        radial-gradient(circle at 85% 20%, rgba(124,77,255,.18), transparent 55%),
+        radial-gradient(circle at 40% 95%, rgba(0,255,168,.10), transparent 55%);
+      transform: rotate(5deg);
+      pointer-events:none;
+    }
+    .heroLeft > *{ position:relative; }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.20);
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(0,255,168,.60);
+    }
+
+    .headline{
+      font-size: clamp(34px, 4.6vw, 58px);
+      line-height: 1.05;
+      margin: 0 0 10px;
+      letter-spacing: -0.9px;
+    }
+    .headline .grad{
       background: linear-gradient(135deg, var(--brand), var(--brand2));
       -webkit-background-clip:text;
       background-clip:text;
       color: transparent;
     }
-    .meta{
+    .subhead{
+      margin: 0 0 16px;
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-      margin-bottom: 18px;
-    }
-    h2{
-      margin: 18px 0 8px;
-      font-size: 16px;
-      letter-spacing: .2px;
-    }
-    p, li{
-      color: rgba(234,240,255,.86);
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.65;
+      max-width: 62ch;
     }
-    ul{ margin: 8px 0 0 18px; }
-    a{ color: rgba(234,240,255,.92); }
-    .note{
+
+    .pillRow{ display:flex; flex-wrap:wrap; gap:10px; margin: 10px 0 16px; }
+    .pill{
+      padding: 9px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.20);
+      font-size: 12px;
+      color: rgba(234,240,255,.86);
+    }
+
+    .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top: 8px; }
+
+    .stats{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+    @media (max-width: 520px){ .stats{ grid-template-columns:1fr; } }
+    .stat{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.20);
+      padding: 12px 14px;
+    }
+    .stat strong{ display:block; font-size: 16px; margin-bottom: 4px; }
+    .stat span{ color: var(--muted); font-size: 12px; }
+
+    .formTitle{ margin:0 0 6px; font-size: 18px; letter-spacing:.2px; }
+    .formSub{ margin:0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 900px){ .grid{ grid-template-columns:1fr; } }
+
+    label{
+      display:block;
+      margin: 10px 0 6px;
+      font-size: 12px;
+      color: rgba(234,240,255,.84);
+    }
+    input, select, textarea{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      outline:none;
+      font-size: 14px;
+    }
+    textarea{ min-height: 96px; resize:vertical; }
+
+    .consentBox{
+      margin-top: 14px;
+      padding: 12px 12px;
+      border-radius: 14px;
       border:1px solid rgba(255,255,255,.14);
       background: rgba(0,0,0,.20);
-      border-radius: 14px;
-      padding: 12px 14px;
-      margin-top: 14px;
-      color: rgba(234,240,255,.86);
-      font-size: 13px;
-      line-height: 1.55;
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: rgba(234,240,255,.88);
     }
+    .consentBox label{
+      margin:0;
+      font-size: 12.5px;
+      color: rgba(234,240,255,.88);
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .consentBox input[type="checkbox"]{
+      width:auto;
+      margin-top: 2px;
+      transform: scale(1.05);
+      accent-color: var(--accent);
+    }
+    .policyLinks{
+      margin-top: 10px;
+      font-size: 12px;
+      color: rgba(234,240,255,.72);
+    }
+    .policyLinks a{
+      color: rgba(234,240,255,.92);
+      text-decoration:none;
+      border-bottom: 1px solid rgba(234,240,255,.25);
+    }
+    .policyLinks a:hover{ opacity:.9; }
+
+    .result{
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.20);
+      display:none;
+      font-size: 13px;
+    }
+
     footer{
       margin-top: 18px;
       text-align:center;
@@ -175,6 +409,7 @@
       font-size: 12px;
       padding: 10px 0 0;
     }
+    .fine{ margin-top: 8px; font-size: 11px; opacity:.78; line-height:1.4; }
   </style>
 </head>
 
@@ -188,75 +423,199 @@
           <svg viewBox="0 0 24 24"><path d="M12 3 2 11h2v9h6v-6h4v6h6v-9h2L12 3z"/></svg>
         </div>
         <div class="title">
-          <strong>White’s Painting & Renovations</strong>
+          <strong>White’s Painting &amp; Renovations</strong>
           <span>Ukiah, CA • Free Estimates • Financing Available</span>
         </div>
       </div>
 
-      <a class="btn btn-primary" href="/">← Back to Website</a>
+      <button class="menuBtn" id="menuBtn" type="button">☰ Menu</button>
+
+      <div class="navlinks" aria-label="Primary navigation">
+        <a href="#estimate">Estimate</a>
+        <a href="tel:+17074667024">Call</a>
+      </div>
     </div>
 
-    <main class="panel">
-      <h1><span class="grad">Terms &amp; Conditions</span></h1>
-      <div class="meta">
-        Effective Date: February 2026<br/>
-        These Terms &amp; Conditions govern your use of our website and communications.
+    <div class="mobileMenu" id="mobileMenu">
+      <a href="#estimate">Get Estimate</a>
+      <a href="tel:+17074667024">Call (707) 466-7024</a>
+    </div>
+
+    <section class="hero" id="top">
+      <div class="panel heroLeft">
+        <div class="kicker"><span class="dot"></span> Clean work • Clear pricing • Fast scheduling</div>
+        <h1 class="headline">Make your home look <span class="grad">brand new</span>.</h1>
+        <p class="subhead">
+          We handle interior &amp; exterior painting, cabinet refinishing, drywall repair, flooring, and remodel punch lists.
+          We protect your home, show up on time, and deliver a finish that looks expensive.
+        </p>
+
+        <div class="pillRow">
+          <div class="pill">✅ Free Estimates</div>
+          <div class="pill">🧰 Painting • Cabinets • Drywall</div>
+          <div class="pill">🧱 Flooring • Remodel Support</div>
+          <div class="pill">💳 Financing Available</div>
+        </div>
+
+        <div class="ctaRow">
+          <a class="btn btn-primary" href="#estimate">Get a Free Estimate</a>
+          <a class="btn btn-ghost" href="tel:+17074667024">Call Now (707) 466-7024</a>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><strong>Fast Response</strong><span>We’ll text you back quickly to schedule.</span></div>
+          <div class="stat"><strong>Professional Prep</strong><span>Caulk, prime, mask, protect, clean lines.</span></div>
+          <div class="stat"><strong>Quality Finish</strong><span>Durable coatings, crisp trim, smooth walls.</span></div>
+        </div>
       </div>
 
-      <h2>Use of Website</h2>
-      <p>
-        By accessing this website or submitting your information, you agree to comply with these Terms &amp; Conditions.
-        If you do not agree, please do not use the website.
-      </p>
+      <aside class="panel" id="estimate">
+        <h3 class="formTitle">Free Estimate — Get Scheduled</h3>
+        <p class="formSub">Fill this out. Sally will text you to set a walkthrough time.</p>
 
-      <h2>SMS Messaging Terms (A2P / 10DLC)</h2>
-      <p>
-        By checking the SMS consent box on our estimate request form, you agree to receive SMS messages from
-        White’s Painting &amp; Renovations regarding estimate confirmations, scheduling updates, and project-related communication.
-      </p>
-      <ul>
-        <li>Message frequency varies.</li>
-        <li>Message &amp; data rates may apply.</li>
-        <li>Reply <strong>STOP</strong> to unsubscribe at any time.</li>
-        <li>Reply <strong>HELP</strong> for assistance.</li>
-      </ul>
+        <form id="leadForm" novalidate>
+          <div class="grid">
+            <div>
+              <label for="first_name">First Name</label>
+              <input id="first_name" name="first_name" placeholder="Your name" autocomplete="given-name" />
+            </div>
+            <div>
+              <label for="phone">Phone (required)</label>
+              <input id="phone" name="phone" placeholder="(707) 555-1234" required autocomplete="tel" />
+            </div>
+          </div>
 
-      <div class="note">
-        <strong>Carrier Disclaimer:</strong> Carriers are not liable for delayed or undelivered messages.
-      </div>
+          <div class="grid">
+            <div>
+              <label for="email">Email (optional)</label>
+              <input id="email" name="email" type="email" placeholder="you@email.com" autocomplete="email" />
+            </div>
+            <div>
+              <label for="project_type">Project Type (required)</label>
+              <select id="project_type" name="project_type" required>
+                <option value="">Select…</option>
+                <option>Interior Painting</option>
+                <option>Exterior Painting</option>
+                <option>Cabinet Painting</option>
+                <option>Drywall Repair</option>
+                <option>Flooring</option>
+                <option>Remodel / Punch List</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
 
-      <h2>Customer Support</h2>
-      <p>
-        For help, contact:<br/>
-        White’s Painting &amp; Renovations<br/>
-        Ukiah, CA<br/>
-        Phone: <a href="tel:+17073501569">(707) 350-1569</a>
-      </p>
+          <div class="grid">
+            <div>
+              <label for="city">City (required)</label>
+              <input id="city" name="city" placeholder="Ukiah" required autocomplete="address-level2" />
+            </div>
+            <div>
+              <label for="address">Property Address (required)</label>
+              <input id="address" name="address" placeholder="123 Main St" required autocomplete="street-address" />
+            </div>
+          </div>
 
-      <h2>Age Restriction (18+)</h2>
-      <p>
-        By using our services or submitting a request, you confirm that you are at least 18 years old.
-      </p>
+          <label for="notes">Notes (optional)</label>
+          <textarea id="notes" name="notes" placeholder="Rooms, cabinets, timeline, etc."></textarea>
 
-      <h2>Privacy Policy</h2>
-      <p>
-        Your use of our website and services is also governed by our Privacy Policy:
-        <a href="/privacy-policy.html">Privacy Policy</a>
-      </p>
+          <div class="consentBox">
+            <label for="sms_consent">
+              <input type="checkbox" id="sms_consent" name="sms_consent">
+              <span>
+                By checking this box, you agree to receive informational SMS messages from White’s Painting &amp; Renovations regarding your estimate request, appointment reminders, scheduling updates, and project communication.
+                Message frequency varies. Message &amp; data rates may apply. Reply STOP to unsubscribe or HELP for help.
+              </span>
+            </label>
 
-      <h2>Changes to These Terms</h2>
-      <p>
-        We may update these Terms &amp; Conditions from time to time. Any updates will be posted on this page with a revised effective date.
-      </p>
-    </main>
+            <div class="policyLinks">
+              <a href="/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+              &nbsp;|&nbsp;
+              <a href="/terms-and-conditions" target="_blank" rel="noopener">Terms &amp; Conditions</a>
+            </div>
+          </div>
+
+          <div class="ctaRow" style="margin-top:14px;">
+            <button class="btn btn-primary" type="submit">Submit Request</button>
+            <a class="btn btn-ghost" href="tel:+17074667024">Call Instead (707) 466-7024</a>
+          </div>
+
+          <div class="result" id="result"></div>
+        </form>
+      </aside>
+    </section>
 
     <footer>
-      © <span id="yr"></span> White’s Painting & Renovations • Ukiah, CA
+      © <span id="yr"></span> White’s Painting &amp; Renovations • Ukiah, CA
+      <div class="fine">Free Estimates • Financing Available</div>
     </footer>
   </div>
 
   <script>
     document.getElementById("yr").textContent = new Date().getFullYear();
+
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    menuBtn?.addEventListener("click", () => {
+      const isOpen = mobileMenu.style.display === "block";
+      mobileMenu.style.display = isOpen ? "none" : "block";
+    });
+    mobileMenu?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mobileMenu.style.display="none"));
+
+    const API_URL = "/web/lead";
+
+    function showResult(msg, ok=true){
+      const el = document.getElementById("result");
+      el.style.display = "block";
+      el.style.borderColor = ok ? "rgba(0,255,168,.35)" : "rgba(255,77,109,.45)";
+      el.innerHTML = msg;
+    }
+
+    document.getElementById("leadForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const payload = {
+        first_name: document.getElementById("first_name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        project_type: document.getElementById("project_type").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        notes: document.getElementById("notes").value.trim(),
+        sms_consent: document.getElementById("sms_consent").checked,
+      };
+
+      if (!payload.phone || !payload.project_type || !payload.address || !payload.city) {
+        showResult("Please fill in all required fields.", false);
+        return;
+      }
+
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type":"application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json().catch(()=>({}));
+
+        if (res.ok && data.ok !== false) {
+          showResult("Thank you! Sally will text you shortly to schedule your estimate.");
+          if (window.fbq) {
+            fbq('track', 'Lead');
+          }
+          e.target.reset();
+        } else {
+          showResult(
+            (data && (data.detail || data.error)) ? (data.detail || data.error)
+            : "Something went wrong. Please try again or call (707) 466-7024.",
+            false
+          );
+        }
+      } catch (err) {
+        showResult("Network error. Please try again or call (707) 466-7024.", false);
+      }
+    });
   </script>
 </body>
 </html>

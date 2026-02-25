@@ -11,7 +11,7 @@
   <meta property="og:description" content="Free estimates • Financing available • Ukiah, CA" />
   <meta property="og:type" content="website" />
 
-  <!-- Meta Pixel Code (NEW: Your Pixel) -->
+  <!-- Meta Pixel Code (Your Pixel) -->
   <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -423,7 +423,7 @@
           <svg viewBox="0 0 24 24"><path d="M12 3 2 11h2v9h6v-6h4v6h6v-9h2L12 3z"/></svg>
         </div>
         <div class="title">
-          <strong>White’s Painting & Renovations</strong>
+          <strong>White’s Painting &amp; Renovations</strong>
           <span>Ukiah, CA • Free Estimates • Financing Available</span>
         </div>
       </div>
@@ -432,13 +432,13 @@
 
       <div class="navlinks" aria-label="Primary navigation">
         <a href="#estimate">Estimate</a>
-        <a href="tel:+17073501569">Call</a>
+        <a href="tel:+17074667024">Call</a>
       </div>
     </div>
 
     <div class="mobileMenu" id="mobileMenu">
       <a href="#estimate">Get Estimate</a>
-      <a href="tel:+17073501569">Call (707) 350-1569</a>
+      <a href="tel:+17074667024">Call (707) 466-7024</a>
     </div>
 
     <section class="hero" id="top">
@@ -446,7 +446,7 @@
         <div class="kicker"><span class="dot"></span> Clean work • Clear pricing • Fast scheduling</div>
         <h1 class="headline">Make your home look <span class="grad">brand new</span>.</h1>
         <p class="subhead">
-          We handle interior & exterior painting, cabinet refinishing, drywall repair, flooring, and remodel punch lists.
+          We handle interior &amp; exterior painting, cabinet refinishing, drywall repair, flooring, and remodel punch lists.
           We protect your home, show up on time, and deliver a finish that looks expensive.
         </p>
 
@@ -459,7 +459,7 @@
 
         <div class="ctaRow">
           <a class="btn btn-primary" href="#estimate">Get a Free Estimate</a>
-                    <a class="btn btn-ghost" href="tel:+17073501569">Call Now (707) 350-1569</a>
+          <a class="btn btn-ghost" href="tel:+17074667024">Call Now (707) 466-7024</a>
         </div>
 
         <div class="stats">
@@ -523,8 +523,8 @@
             <label for="sms_consent">
               <input type="checkbox" id="sms_consent" name="sms_consent">
               <span>
-                By checking this box, you agree to receive informational SMS messages from White’s Painting & Renovations regarding your estimate request, appointment reminders, scheduling updates, and project communication.
-                Message frequency varies. Message & data rates may apply. Reply STOP to unsubscribe or HELP for help.
+                By checking this box, you agree to receive informational SMS messages from White’s Painting &amp; Renovations regarding your estimate request, appointment reminders, scheduling updates, and project communication.
+                Message frequency varies. Message &amp; data rates may apply. Reply STOP to unsubscribe or HELP for help.
               </span>
             </label>
 
@@ -537,7 +537,7 @@
 
           <div class="ctaRow" style="margin-top:14px;">
             <button class="btn btn-primary" type="submit">Submit Request</button>
-            <a class="btn btn-ghost" href="tel:+17073501569">Call Instead (707) 350-1569</a>
+            <a class="btn btn-ghost" href="tel:+17074667024">Call Instead (707) 466-7024</a>
           </div>
 
           <div class="result" id="result"></div>
@@ -546,7 +546,7 @@
     </section>
 
     <footer>
-      © <span id="yr"></span> White’s Painting & Renovations • Ukiah, CA
+      © <span id="yr"></span> White’s Painting &amp; Renovations • Ukiah, CA
       <div class="fine">Free Estimates • Financing Available</div>
     </footer>
   </div>
@@ -601,16 +601,19 @@
 
         if (res.ok && data.ok !== false) {
           showResult("Thank you! Sally will text you shortly to schedule your estimate.");
-          // Track Lead on successful submit (NEW)
           if (window.fbq) {
             fbq('track', 'Lead');
           }
           e.target.reset();
         } else {
-          showResult((data && (data.detail || data.error)) ? (data.detail || data.error) : "Something went wrong. Please try again or call (707) 35--1569.", false);
+          showResult(
+            (data && (data.detail || data.error)) ? (data.detail || data.error)
+            : "Something went wrong. Please try again or call (707) 466-7024.",
+            false
+          );
         }
       } catch (err) {
-        showResult("Network error. Please try again or call (707) 350-1569.", false);
+        showResult("Network error. Please try again or call (707) 466-7024.", false);
       }
     });
   </script>
