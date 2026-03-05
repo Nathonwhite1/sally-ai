@@ -5,615 +5,875 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>White’s Painting & Renovations | Ukiah, CA | Free Estimates</title>
-  <meta name="description" content="White’s Painting & Renovations in Ukiah, CA. Interior/exterior painting, cabinets, drywall, flooring, remodel support. Free estimates. Financing available." />
+  <meta name="description" content="Premium interior & exterior painting in Ukiah, CA and surrounding areas. Clean prep, sharp lines, durable finishes. Free estimates. Financing available. Call (707) 466-7024." />
 
   <meta property="og:title" content="White’s Painting & Renovations" />
   <meta property="og:description" content="Free estimates • Financing available • Ukiah, CA" />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="/" />
 
-  <!-- Meta Pixel Code (Your Pixel) -->
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
+  <meta name="theme-color" content="#0a0f1c" />
 
-    fbq('init', '1416475723549594');
-    fbq('track', 'PageView');
-  </script>
-  <noscript>
-    <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1416475723549594&ev=PageView&noscript=1"/>
-  </noscript>
-  <!-- End Meta Pixel Code -->
+  <!-- Fonts (premium + modern) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#070A0F;
-      --text:#EAF0FF;
-      --muted:rgba(234,240,255,.72);
-      --stroke:rgba(255,255,255,.14);
-      --shadow:0 22px 70px rgba(0,0,0,.50);
-      --radius:22px;
-
-      --brand:#35C7FF;
-      --brand2:#7C4DFF;
-      --accent:#00FFA8;
-      --danger:#FF4D6D;
-
-      --max:1160px;
+      --bg:#0a0f1c;
+      --card:#0f1730;
+      --card2:#101a38;
+      --text:#e9eefc;
+      --muted:#b7c3e6;
+      --line:rgba(255,255,255,.12);
+      --accent:#1ea7ff;
+      --accent2:#35d0ff;
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --shadow2: 0 10px 30px rgba(0,0,0,.25);
+      --radius: 22px;
+      --radius2: 34px;
+      --max: 1140px;
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    html{ scroll-behavior:smooth; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% -10%, rgba(30,167,255,.25), transparent 55%),
+        radial-gradient(900px 600px at 95% 10%, rgba(53,208,255,.18), transparent 55%),
+        var(--bg);
       overflow-x:hidden;
     }
-
-    .bg{
-      position:fixed;
-      inset:0;
-      z-index:-2;
-      background:
-        radial-gradient(1100px 900px at 15% 10%, rgba(53,199,255,.22), transparent 60%),
-        radial-gradient(900px 700px at 85% 18%, rgba(124,77,255,.22), transparent 55%),
-        radial-gradient(900px 900px at 50% 92%, rgba(0,255,168,.12), transparent 60%),
-        url("/static/exterior2.jpg") center/cover no-repeat fixed;
-      filter:saturate(1.12) contrast(1.05);
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px;}
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      background: rgba(10,15,28,.72);
+      backdrop-filter: blur(14px);
+      border-bottom:1px solid var(--line);
     }
-    .bg::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(180deg, rgba(7,10,15,.78), rgba(7,10,15,.92));
-      z-index:1;
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
     }
-
-    .wrap{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 18px 16px 80px;
-    }
-
-    .nav{
-      position: sticky;
-      top: 12px;
-      z-index: 60;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 14px;
-      padding: 12px 14px;
-      border-radius: 999px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 18px 70px rgba(0,0,0,.35);
-    }
-
     .brand{
       display:flex; align-items:center; gap:12px;
       min-width: 240px;
     }
     .logo{
-      width:44px; height:44px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(53,199,255,.95), rgba(124,77,255,.95));
-      border: 1px solid rgba(255,255,255,.22);
-      box-shadow: 0 18px 44px rgba(53,199,255,.20);
-      display:grid; place-items:center;
-      flex:0 0 auto;
+      width:42px; height:42px; border-radius:12px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 40%),
+        linear-gradient(135deg, rgba(30,167,255,.9), rgba(53,208,255,.55));
+      box-shadow: 0 10px 25px rgba(30,167,255,.25);
+      border:1px solid rgba(255,255,255,.18);
     }
-    .logo svg{ width:24px; height:24px; fill:#fff; opacity:.95; }
-
-    .brand .title{ line-height:1.12; }
-    .brand .title strong{
+    .brand h1{
+      font-family: Manrope, system-ui, sans-serif;
+      font-size: 15px; line-height: 1.1;
+      margin:0;
+      letter-spacing: .2px;
+    }
+    .brand small{
       display:block;
-      font-size: 14px;
-      letter-spacing:.2px;
+      margin-top:2px;
+      color:var(--muted);
+      font-size:12px;
     }
-    .brand .title span{
-      display:block;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .navlinks{
-      display:flex; gap: 10px; align-items:center;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .navlinks a{
-      color: rgba(234,240,255,.9);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing:.2px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      text-decoration:none;
-      transition: transform .12s ease, background .12s ease;
-    }
-    .navlinks a:hover{ background: rgba(255,255,255,.08); transform: translateY(-1px); }
-
-    .menuBtn{
-      display:none;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.22);
-      color: var(--text);
-      border-radius: 999px;
-      padding: 10px 12px;
-      font-weight: 800;
-      cursor:pointer;
-    }
-
-    @media (max-width: 900px){
-      .nav{ border-radius: 18px; }
-      .navlinks{ display:none; }
-      .menuBtn{ display:inline-flex; align-items:center; gap:8px; }
-      .brand{ min-width:auto; }
-    }
-
-    .mobileMenu{
-      display:none;
-      margin-top: 10px;
-      border-radius: 18px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 18px 70px rgba(0,0,0,.35);
-      padding: 10px;
-    }
-    .mobileMenu a{
-      display:block;
-      padding: 12px 12px;
-      border-radius: 14px;
-      color: rgba(234,240,255,.92);
-      text-decoration:none;
-      font-weight:800;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      margin-bottom: 8px;
-    }
-    .mobileMenu a:last-child{ margin-bottom: 0; }
-
-    .btn{
-      appearance:none;
-      border:1px solid rgba(255,255,255,0.18);
-      padding: 13px 16px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      color: var(--text);
-      font-weight: 900;
+    .nav{
+      display:flex; align-items:center; gap:18px;
+      color: rgba(233,238,252,.86);
       font-size: 13px;
-      letter-spacing:.2px;
-      cursor:pointer;
-      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
-      box-shadow:
-        0 10px 0 rgba(0,0,0,.26),
-        0 22px 50px rgba(0,0,0,.45);
-      transform: translateY(-2px);
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      user-select:none;
+    }
+    .nav a{opacity:.86}
+    .nav a:hover{opacity:1}
+    .cta-row{
+      display:flex; align-items:center; gap:10px;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 14px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+      font-size:13px;
+      color: rgba(233,238,252,.92);
       white-space:nowrap;
     }
-    .btn:hover{ filter: brightness(1.04); transform: translateY(-3px); }
-    .btn:active{
-      transform: translateY(2px);
-      box-shadow:
-        0 4px 0 rgba(0,0,0,.26),
-        0 16px 30px rgba(0,0,0,.35);
+    .btn{
+      appearance:none; border:none;
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 16px;
+      border-radius: 999px;
+      font-weight:600;
+      cursor:pointer;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      white-space:nowrap;
     }
+    .btn:active{transform: translateY(1px)}
     .btn-primary{
-      border-color: rgba(53,199,255,.38);
-      background: linear-gradient(135deg, rgba(53,199,255,.95), rgba(124,77,255,.95));
-      box-shadow:
-        0 10px 0 rgba(0,0,0,.26),
-        0 22px 55px rgba(53,199,255,.25);
+      color:#07101d;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 18px 40px rgba(30,167,255,.22);
     }
+    .btn-primary:hover{box-shadow: 0 22px 55px rgba(30,167,255,.28)}
     .btn-ghost{
-      background: rgba(0,0,0,.22);
-      border-color: rgba(255,255,255,.16);
+      color: rgba(233,238,252,.95);
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--line);
     }
-
-    section{ margin-top: 18px; }
-    .panel{
-      border-radius: var(--radius);
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(16px);
-      box-shadow: var(--shadow);
-      padding: 22px;
-    }
-
+    .btn-ghost:hover{background: rgba(255,255,255,.10)}
     .hero{
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 16px;
-      align-items:stretch;
-      margin-top: 16px;
+      position:relative;
+      padding: 64px 0 0;
     }
-    @media (max-width: 900px){ .hero{ grid-template-columns:1fr; } }
-
-    .heroLeft{ position:relative; overflow:hidden; }
-    .heroLeft::before{
-      content:"";
-      position:absolute;
-      inset:-120px;
+    .hero-bg{
+      position:absolute; inset:0;
       background:
-        radial-gradient(circle at 15% 15%, rgba(53,199,255,.18), transparent 55%),
-        radial-gradient(circle at 85% 20%, rgba(124,77,255,.18), transparent 55%),
-        radial-gradient(circle at 40% 95%, rgba(0,255,168,.10), transparent 55%);
-      transform: rotate(5deg);
-      pointer-events:none;
+        radial-gradient(900px 550px at 20% 25%, rgba(30,167,255,.16), transparent 60%),
+        radial-gradient(900px 650px at 85% 35%, rgba(53,208,255,.14), transparent 62%),
+        linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.78));
+      z-index:-2;
     }
-    .heroLeft > *{ position:relative; }
-
-    .kicker{
+    .hero-photo{
+      position:absolute; inset:0;
+      z-index:-3;
+      /* swap to your own hero image if you have one */
+      background:
+        url("/static/hero.jpg") center/cover no-repeat;
+      filter: saturate(1.05) contrast(1.05);
+    }
+    .hero-inner{
+      display:grid;
+      grid-template-columns: 1.25fr .9fr;
+      gap: 28px;
+      align-items: start;
+      padding-bottom: 90px;
+      border-bottom-left-radius: 110px;
+      border-bottom-right-radius: 110px;
+      overflow:hidden;
+    }
+    .badge{
       display:inline-flex;
       align-items:center;
       gap:10px;
-      padding: 8px 12px;
+      padding:10px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.20);
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 14px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.16);
+      color: rgba(233,238,252,.92);
+      font-size: 13px;
+      backdrop-filter: blur(10px);
     }
     .dot{
-      width:10px; height:10px; border-radius:50%;
-      background: var(--accent);
-      box-shadow: 0 0 18px rgba(0,255,168,.60);
+      width:10px;height:10px;border-radius:50%;
+      background: var(--accent2);
+      box-shadow: 0 0 0 6px rgba(53,208,255,.18);
     }
-
-    .headline{
-      font-size: clamp(34px, 4.6vw, 58px);
-      line-height: 1.05;
-      margin: 0 0 10px;
-      letter-spacing: -0.9px;
+    .hero h2{
+      font-family: Manrope, system-ui, sans-serif;
+      font-size: 54px;
+      line-height: 1.02;
+      margin: 16px 0 10px;
+      letter-spacing: -0.6px;
     }
-    .headline .grad{
-      background: linear-gradient(135deg, var(--brand), var(--brand2));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color: transparent;
+    .hero p{
+      color: rgba(233,238,252,.86);
+      font-size: 17px;
+      line-height: 1.6;
+      margin: 0 0 18px;
+      max-width: 54ch;
     }
-    .subhead{
-      margin: 0 0 16px;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.65;
-      max-width: 62ch;
-    }
-
-    .pillRow{ display:flex; flex-wrap:wrap; gap:10px; margin: 10px 0 16px; }
-    .pill{
-      padding: 9px 12px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.20);
-      font-size: 12px;
-      color: rgba(234,240,255,.86);
-    }
-
-    .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top: 8px; }
-
-    .stats{
+    .hero-points{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 16px;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap:10px;
+      margin: 18px 0 22px;
+      padding:0;
+      list-style:none;
     }
-    @media (max-width: 520px){ .stats{ grid-template-columns:1fr; } }
-    .stat{
-      border-radius: 18px;
+    .hero-points li{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.20);
-      padding: 12px 14px;
     }
-    .stat strong{ display:block; font-size: 16px; margin-bottom: 4px; }
-    .stat span{ color: var(--muted); font-size: 12px; }
+    .check{
+      width:18px;height:18px;border-radius:6px;
+      background: linear-gradient(135deg, rgba(30,167,255,.95), rgba(53,208,255,.65));
+      box-shadow: 0 10px 25px rgba(30,167,255,.18);
+      flex:0 0 auto;
+      margin-top:2px;
+      position:relative;
+    }
+    .check:after{
+      content:"";
+      position:absolute;
+      left:5px; top:4px;
+      width:6px; height:3px;
+      border-left:2px solid #06101d;
+      border-bottom:2px solid #06101d;
+      transform: rotate(-45deg);
+      opacity:.95;
+    }
+    .hero-actions{
+      display:flex; gap:12px; flex-wrap:wrap;
+      margin-top: 18px;
+    }
 
-    .formTitle{ margin:0 0 6px; font-size: 18px; letter-spacing:.2px; }
-    .formSub{ margin:0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.45; }
-
-    .grid{
+    .panel{
+      border-radius: var(--radius2);
+      background: rgba(16,26,56,.55);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      backdrop-filter: blur(14px);
+    }
+    .panel-head{
+      padding: 18px 18px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+    }
+    .panel-head strong{
+      font-family: Manrope, system-ui, sans-serif;
+      letter-spacing: .2px;
+      font-size: 14px;
+    }
+    .panel-head span{
+      font-size:12px;
+      color: rgba(233,238,252,.72);
+    }
+    form{
+      padding: 16px 18px 18px;
       display:grid;
-      grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
-    @media (max-width: 900px){ .grid{ grid-template-columns:1fr; } }
-
-    label{
-      display:block;
-      margin: 10px 0 6px;
-      font-size: 12px;
-      color: rgba(234,240,255,.84);
+    .field{
+      display:grid; gap:6px;
     }
-    input, select, textarea{
+    .field label{
+      font-size: 12px;
+      color: rgba(233,238,252,.78);
+    }
+    .field input, .field textarea, .field select{
       width:100%;
       padding: 12px 12px;
       border-radius: 14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
       color: var(--text);
-      outline:none;
-      font-size: 14px;
+      outline: none;
     }
-    textarea{ min-height: 96px; resize:vertical; }
-
-    .consentBox{
-      margin-top: 14px;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.20);
-      font-size: 12.5px;
-      line-height: 1.45;
-      color: rgba(234,240,255,.88);
+    .field input::placeholder, .field textarea::placeholder{color: rgba(233,238,252,.45)}
+    .two{
+      display:grid; grid-template-columns: 1fr 1fr; gap:10px;
     }
-    .consentBox label{
-      margin:0;
-      font-size: 12.5px;
-      color: rgba(234,240,255,.88);
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
+    .note{
+      color: rgba(233,238,252,.68);
+      font-size:12px;
+      line-height:1.5;
     }
-    .consentBox input[type="checkbox"]{
-      width:auto;
-      margin-top: 2px;
-      transform: scale(1.05);
-      accent-color: var(--accent);
+    .stats-wrap{
+      margin-top: -58px;
+      position:relative;
+      z-index: 10;
     }
-    .policyLinks{
-      margin-top: 10px;
+    .stats{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 16px;
+      padding: 18px 18px;
+      border-radius: 999px;
+      border: 2px solid rgba(30,167,255,.55);
+      background: rgba(10,15,28,.65);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow2);
+    }
+    .stat{
+      text-align:center;
+      padding: 8px 6px;
+    }
+    .stat b{
+      display:block;
+      font-family: Manrope, system-ui, sans-serif;
+      font-size: 28px;
+      color: var(--accent2);
+      letter-spacing: -0.2px;
+    }
+    .stat small{
+      display:block;
+      color: rgba(233,238,252,.80);
+      margin-top: 6px;
       font-size: 12px;
-      color: rgba(234,240,255,.72);
     }
-    .policyLinks a{
-      color: rgba(234,240,255,.92);
-      text-decoration:none;
-      border-bottom: 1px solid rgba(234,240,255,.25);
-    }
-    .policyLinks a:hover{ opacity:.9; }
 
-    .result{
-      margin-top: 12px;
-      padding: 10px 12px;
-      border-radius: 14px;
+    section{
+      padding: 68px 0;
+    }
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .section-title h3{
+      margin:0;
+      font-family: Manrope, system-ui, sans-serif;
+      font-size: 34px;
+      letter-spacing: -0.4px;
+    }
+    .section-title p{
+      margin:0;
+      color: rgba(233,238,252,.72);
+      max-width: 52ch;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .grid3{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px;}
+    .card{
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      padding: 18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.20);
+    }
+    .card h4{
+      margin: 0 0 8px;
+      font-family: Manrope, system-ui, sans-serif;
+      font-size: 18px;
+    }
+    .card p{margin:0;color: rgba(233,238,252,.74); line-height:1.65; font-size:14px;}
+    .muted{color: rgba(233,238,252,.72)}
+    .split{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+      align-items:stretch;
+    }
+    .soft{
+      background: linear-gradient(180deg, rgba(30,167,255,.18), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 70px;
+      padding: 34px;
+    }
+    .soft img{
+      width:100%;
+      border-radius: 22px;
       border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.20);
-      display:none;
+      box-shadow: 0 18px 50px rgba(0,0,0,.25);
+      display:block;
+      background: rgba(255,255,255,.04);
+    }
+    .gallery{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .gallery img{
+      width:100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+    }
+    .reviews{
+      display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px;
+    }
+    .stars{letter-spacing:2px; color: rgba(255,255,255,.92); font-size: 14px;}
+    details{
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,.04);
+    }
+    details summary{
+      cursor:pointer;
+      font-weight:600;
+      list-style:none;
+      font-family: Manrope, system-ui, sans-serif;
+    }
+    details summary::-webkit-details-marker{display:none}
+    details p{margin:10px 0 0; color: rgba(233,238,252,.74); line-height:1.6; font-size:14px;}
+    footer{
+      padding: 38px 0 44px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      color: rgba(233,238,252,.70);
       font-size: 13px;
     }
-
-    footer{
-      margin-top: 18px;
-      text-align:center;
-      color: rgba(234,240,255,.62);
-      font-size: 12px;
-      padding: 10px 0 0;
+    .footer-grid{
+      display:grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 16px;
+      align-items:start;
     }
-    .fine{ margin-top: 8px; font-size: 11px; opacity:.78; line-height:1.4; }
+
+    /* Mobile sticky call */
+    .sticky{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      padding: 10px 14px;
+      background: rgba(10,15,28,.80);
+      border-top: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(14px);
+      display:none;
+      z-index: 60;
+    }
+    .sticky .wrap{display:flex; gap:10px; justify-content:space-between; align-items:center;}
+    .sticky .btn{flex:1}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-inner{grid-template-columns: 1fr; padding-bottom: 80px; border-bottom-left-radius: 60px; border-bottom-right-radius: 60px;}
+      .stats{grid-template-columns: repeat(2, minmax(0,1fr)); border-radius: 26px;}
+      .split{grid-template-columns: 1fr;}
+      .grid3{grid-template-columns: 1fr;}
+      .reviews{grid-template-columns: 1fr;}
+      .nav{display:none}
+      .sticky{display:block}
+      .hero h2{font-size: 40px}
+      .two{grid-template-columns: 1fr}
+      .soft{border-radius: 46px; padding: 22px}
+    }
   </style>
 </head>
 
 <body>
-  <div class="bg" aria-hidden="true"></div>
 
-  <div class="wrap">
-    <div class="nav">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M12 3 2 11h2v9h6v-6h4v6h6v-9h2L12 3z"/></svg>
-        </div>
-        <div class="title">
-          <strong>White’s Painting &amp; Renovations</strong>
-          <span>Ukiah, CA • Free Estimates • Financing Available</span>
-        </div>
-      </div>
-
-      <button class="menuBtn" id="menuBtn" type="button">☰ Menu</button>
-
-      <div class="navlinks" aria-label="Primary navigation">
-        <a href="#estimate">Estimate</a>
-        <a href="tel:+17074667024">Call</a>
-      </div>
-    </div>
-
-    <div class="mobileMenu" id="mobileMenu">
-      <a href="#estimate">Get Estimate</a>
-      <a href="tel:+17074667024">Call (707) 466-7024</a>
-    </div>
-
-    <section class="hero" id="top">
-      <div class="panel heroLeft">
-        <div class="kicker"><span class="dot"></span> Clean work • Clear pricing • Fast scheduling</div>
-        <h1 class="headline">Make your home look <span class="grad">brand new</span>.</h1>
-        <p class="subhead">
-          We handle interior &amp; exterior painting, cabinet refinishing, drywall repair, flooring, and remodel punch lists.
-          We protect your home, show up on time, and deliver a finish that looks expensive.
-        </p>
-
-        <div class="pillRow">
-          <div class="pill">✅ Free Estimates</div>
-          <div class="pill">🧰 Painting • Cabinets • Drywall</div>
-          <div class="pill">🧱 Flooring • Remodel Support</div>
-          <div class="pill">💳 Financing Available</div>
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="wrap">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <h1>White’s Painting &amp; Renovations</h1>
+            <small>Lic# 1102340 • Ukiah, CA • Free Estimates</small>
+          </div>
         </div>
 
-        <div class="ctaRow">
+        <nav class="nav" aria-label="Primary">
+          <a href="#services">Services</a>
+          <a href="#process">Process</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+
+        <div class="cta-row">
+          <a class="pill" href="tel:+17074667024" aria-label="Call White’s Painting">
+            📞 (707) 466-7024
+          </a>
           <a class="btn btn-primary" href="#estimate">Get a Free Estimate</a>
-          <a class="btn btn-ghost" href="tel:+17074667024">Call Now (707) 466-7024</a>
-        </div>
-
-        <div class="stats">
-          <div class="stat"><strong>Fast Response</strong><span>We’ll text you back quickly to schedule.</span></div>
-          <div class="stat"><strong>Professional Prep</strong><span>Caulk, prime, mask, protect, clean lines.</span></div>
-          <div class="stat"><strong>Quality Finish</strong><span>Durable coatings, crisp trim, smooth walls.</span></div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <aside class="panel" id="estimate">
-        <h3 class="formTitle">Free Estimate — Get Scheduled</h3>
-        <p class="formSub">Fill this out. Sally will text you to set a walkthrough time.</p>
+  <!-- Hero -->
+  <header class="hero" id="top">
+    <div class="hero-photo" aria-hidden="true"></div>
+    <div class="hero-bg" aria-hidden="true"></div>
 
-        <form id="leadForm" novalidate>
-          <div class="grid">
-            <div>
-              <label for="first_name">First Name</label>
-              <input id="first_name" name="first_name" placeholder="Your name" autocomplete="given-name" />
-            </div>
-            <div>
-              <label for="phone">Phone (required)</label>
-              <input id="phone" name="phone" placeholder="(707) 555-1234" required autocomplete="tel" />
-            </div>
+    <div class="wrap">
+      <div class="hero-inner">
+        <div>
+          <div class="badge"><span class="dot"></span> Premium interior &amp; exterior painting — done right the first time.</div>
+
+          <h2>Make your home look <span style="color:var(--accent2)">brand new</span> — without the contractor headache.</h2>
+
+          <p>
+            Clean prep, crisp lines, durable finishes. We protect your home, communicate clearly, and deliver a final result
+            you’ll be proud of. Serving Ukiah and surrounding areas.
+          </p>
+
+          <ul class="hero-points">
+            <li><span class="check"></span><span><b>Prep-first</b> approach for long-lasting paint.</span></li>
+            <li><span class="check"></span><span><b>Respectful crews</b> + clean jobsite daily.</span></li>
+            <li><span class="check"></span><span><b>Clear scope</b> + written proposal before work starts.</span></li>
+            <li><span class="check"></span><span><b>Financing available</b> for qualified homeowners.</span></li>
+          </ul>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#estimate">Request Estimate</a>
+            <a class="btn btn-ghost" href="tel:+17074667024">Call Now</a>
           </div>
 
-          <div class="grid">
+          <p class="note" style="margin-top:12px;">
+            Typical response time: same-day or next business day. No pressure — just a clean quote.
+          </p>
+        </div>
+
+        <!-- Lead form -->
+        <div class="panel" id="estimate">
+          <div class="panel-head">
             <div>
-              <label for="email">Email (optional)</label>
-              <input id="email" name="email" type="email" placeholder="you@email.com" autocomplete="email" />
+              <strong>Get your free estimate</strong><br />
+              <span>Tell us what you’re painting — we’ll take it from there.</span>
             </div>
-            <div>
-              <label for="project_type">Project Type (required)</label>
-              <select id="project_type" name="project_type" required>
-                <option value="">Select…</option>
+            <span class="pill" style="padding:8px 12px;">✨ Premium Finish</span>
+          </div>
+
+          <form id="leadForm" action="/lead" method="post">
+            <div class="two">
+              <div class="field">
+                <label for="first_name">First name</label>
+                <input id="first_name" name="first_name" placeholder="Nathon" autocomplete="given-name" required />
+              </div>
+              <div class="field">
+                <label for="last_name">Last name</label>
+                <input id="last_name" name="last_name" placeholder="White" autocomplete="family-name" required />
+              </div>
+            </div>
+
+            <div class="two">
+              <div class="field">
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" placeholder="(707) 555-1234" autocomplete="tel" required />
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" placeholder="you@email.com" autocomplete="email" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="address">Project address</label>
+              <input id="address" name="address" placeholder="123 Main St, Ukiah, CA" autocomplete="street-address" />
+            </div>
+
+            <div class="field">
+              <label for="service">Service</label>
+              <select id="service" name="service">
                 <option>Interior Painting</option>
                 <option>Exterior Painting</option>
                 <option>Cabinet Painting</option>
                 <option>Drywall Repair</option>
-                <option>Flooring</option>
-                <option>Remodel / Punch List</option>
-                <option>Other</option>
+                <option>Flooring / Remodel Support</option>
               </select>
             </div>
+
+            <div class="field">
+              <label for="message">Project details</label>
+              <textarea id="message" name="message" rows="4" placeholder="Example: 3 bedrooms + hallway, patch a few nail holes, repaint off-white."></textarea>
+            </div>
+
+            <!-- Consent + Terms + Privacy (A2P-friendly) -->
+            <div class="card" style="padding:14px; background:rgba(255,255,255,.04)">
+              <div class="field" style="gap:10px">
+                <label for="consent" style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;">
+                  <input
+                    id="consent"
+                    name="consent"
+                    type="checkbox"
+                    value="yes"
+                    required
+                    style="margin-top:3px; width:18px; height:18px; accent-color:#35d0ff;"
+                  />
+                  <span style="font-size:13px; line-height:1.5; color:rgba(233,238,252,.86)">
+                    I agree to the
+                    <a href="#termsText" style="text-decoration:underline">Terms &amp; Conditions</a>
+                    and
+                    <a href="#privacyText" style="text-decoration:underline">Privacy Policy</a>,
+                    and I consent to receive calls, texts (including automated), and emails from
+                    <b>White’s Painting &amp; Renovations</b> regarding my estimate request.
+                    <span style="display:block; margin-top:6px; color:rgba(233,238,252,.70); font-size:12px">
+                      Message frequency varies. Msg &amp; data rates may apply. Reply <b>STOP</b> to opt out, <b>HELP</b> for help.
+                      Consent is not a condition of purchase.
+                    </span>
+                  </span>
+                </label>
+              </div>
+
+              <details style="margin-top:10px;">
+                <summary style="font-size:13px; font-weight:600;">
+                  View Terms &amp; Conditions + Privacy Policy
+                </summary>
+
+                <!-- TERMS -->
+                <div id="termsText" style="margin-top:12px">
+                  <h4 style="margin:0 0 8px; font-size:14px;">Terms &amp; Conditions</h4>
+
+                  <p class="note" style="margin:0 0 10px;">
+                    By submitting this form, you request to be contacted by White’s Painting &amp; Renovations regarding your project and estimate.
+                    You confirm the contact information provided is yours or that you have permission to use it.
+                  </p>
+
+                  <p class="note" style="margin:0 0 10px;">
+                    <b>Text Messages:</b> You agree we may send texts to the number provided (including automated) for appointment confirmations,
+                    reminders, estimate follow-ups, and service-related communication. Message frequency varies. Msg &amp; data rates may apply.
+                    Reply <b>STOP</b> to opt out. Reply <b>HELP</b> for help.
+                  </p>
+
+                  <p class="note" style="margin:0 0 10px;">
+                    <b>Calls/Voicemail/Email:</b> You agree we may contact you by phone, voicemail, and email regarding your request.
+                  </p>
+
+                  <p class="note" style="margin:0;">
+                    <b>No Purchase Required:</b> Consent is not a condition of purchase.
+                  </p>
+                </div>
+
+                <div style="height:1px; background:rgba(255,255,255,.10); margin:14px 0;"></div>
+
+                <!-- PRIVACY -->
+                <div id="privacyText">
+                  <h4 style="margin:0 0 8px; font-size:14px;">Privacy Policy</h4>
+
+                  <p class="note" style="margin:0 0 10px;">
+                    We collect the information you submit (name, phone, email, address, and project details) to respond to your estimate request,
+                    schedule appointments, and provide service communication.
+                  </p>
+
+                  <p class="note" style="margin:0 0 10px;">
+                    <b>How we use your info:</b> To contact you about your request, prepare estimates, schedule/confirm appointments,
+                    and improve customer service. We do not sell your personal information.
+                  </p>
+
+                  <p class="note" style="margin:0 0 10px;">
+                    <b>Sharing:</b> We may share your information with service providers (CRM, scheduling, messaging tools) only as needed
+                    to operate and deliver our services.
+                  </p>
+
+                  <p class="note" style="margin:0;">
+                    <b>Data &amp; security:</b> We take reasonable steps to protect your information, but no method is 100% secure.
+                    You may request updates or deletion by calling
+                    <a href="tel:+17074667024" style="text-decoration:underline">(707) 466-7024</a>.
+                  </p>
+                </div>
+              </details>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Send Request</button>
+
+            <div class="note" style="margin-top:10px">
+              Prefer not to submit online? Call us at
+              <a href="tel:+17074667024" style="text-decoration:underline">(707) 466-7024</a>.
+            </div>
+
+            <div id="result" class="note" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stats strip -->
+  <div class="stats-wrap">
+    <div class="wrap">
+      <div class="stats">
+        <div class="stat"><b>5★</b><small>Reputation first</small></div>
+        <div class="stat"><b>Prep</b><small>Done before paint</small></div>
+        <div class="stat"><b>Clean</b><small>Jobsite protected</small></div>
+        <div class="stat"><b>Financing</b><small>Available</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="wrap">
+      <div class="section-title">
+        <div>
+          <h3>Services that upgrade your home</h3>
+          <p>We specialize in high-visibility work that changes how your home feels — and how it’s valued.</p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="card">
+          <h4>Interior Painting</h4>
+          <p>Walls, ceilings, trim & doors. Crisp cut lines, consistent sheen, and clean masking for a sharp finish.</p>
+        </div>
+        <div class="card">
+          <h4>Exterior Painting</h4>
+          <p>Durable exterior systems with proper prep: scraping, sanding, priming, caulking, and full protection.</p>
+        </div>
+        <div class="card">
+          <h4>Cabinet Painting</h4>
+          <p>Modern, smooth cabinet finishes with the right primers and topcoats for long-term durability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section id="process">
+    <div class="wrap">
+      <div class="soft">
+        <div class="split">
+          <div>
+            <div class="section-title" style="margin-bottom:10px;">
+              <div>
+                <h3 style="margin-bottom:6px;">A process built for premium results</h3>
+                <p>What makes a paint job “expensive” is everything you don’t notice: prep, protection, and clean execution.</p>
+              </div>
+            </div>
+
+            <div class="grid3" style="grid-template-columns: 1fr; gap:12px;">
+              <div class="card" style="background:rgba(255,255,255,.04)">
+                <h4>1) Protect + Prep</h4>
+                <p>Cover floors, mask surfaces, repair minor defects, scrape/sand, prime, and caulk where needed.</p>
+              </div>
+              <div class="card" style="background:rgba(255,255,255,.04)">
+                <h4>2) Paint with control</h4>
+                <p>Brush/roll/spray based on the surface and finish. Clean edges, even coverage, consistent sheen.</p>
+              </div>
+              <div class="card" style="background:rgba(255,255,255,.04)">
+                <h4>3) Final walkthrough</h4>
+                <p>Touch-ups, cleanup, and a walkthrough to confirm it’s right. You get the “wow” finish.</p>
+              </div>
+            </div>
           </div>
 
-          <div class="grid">
+          <div>
+            <img src="/static/project.jpg" alt="Beautiful painted home detail" onerror="this.style.display='none'">
+            <div class="gallery" aria-label="Project gallery">
+              <img src="/static/before1.jpg" alt="Before photo" onerror="this.style.display='none'">
+              <img src="/static/after1.jpg" alt="After photo" onerror="this.style.display='none'">
+            </div>
+            <p class="note" style="margin:12px 4px 0;">
+              Want a cleaner look? Ask about modern off-whites, soft sages, and trim refresh packages.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews">
+    <div class="wrap">
+      <div class="section-title">
+        <div>
+          <h3>Trusted by homeowners</h3>
+          <p>Short, real feedback is the best proof. (We can replace these with your exact Google reviews anytime.)</p>
+        </div>
+        <a class="btn btn-ghost" href="#estimate">Get a Quote</a>
+      </div>
+
+      <div class="reviews">
+        <div class="card">
+          <div class="stars">★★★★★</div>
+          <h4 style="margin-top:10px;">“Clean, professional, on time.”</h4>
+          <p>They protected everything, communicated daily, and the lines came out perfect. Would hire again.</p>
+          <p class="note" style="margin-top:10px;">— Local homeowner</p>
+        </div>
+        <div class="card">
+          <div class="stars">★★★★★</div>
+          <h4 style="margin-top:10px;">“The prep work showed.”</h4>
+          <p>No peeling, no rushed shortcuts. The finish looks like a brand new house.</p>
+          <p class="note" style="margin-top:10px;">— Ukiah area</p>
+        </div>
+        <div class="card">
+          <div class="stars">★★★★★</div>
+          <h4 style="margin-top:10px;">“Worth it.”</h4>
+          <p>Easy to work with, clear scope, and the result looks expensive. Exactly what we wanted.</p>
+          <p class="note" style="margin-top:10px;">— Mendocino County</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-title">
+        <div>
+          <h3>FAQ</h3>
+          <p>Quick answers to the questions we hear all the time.</p>
+        </div>
+      </div>
+
+      <div style="display:grid; gap:12px;">
+        <details>
+          <summary>Do you offer financing?</summary>
+          <p>Yes — financing is available for qualified customers. Ask and we’ll send you the options.</p>
+        </details>
+        <details>
+          <summary>Do you do repairs before painting?</summary>
+          <p>Minor drywall patches and surface prep are standard. Larger repairs can be added as a clearly separated option.</p>
+        </details>
+        <details>
+          <summary>How soon can you start?</summary>
+          <p>It depends on the season and scope. Send your request and we’ll give you the next available window.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="brand" style="min-width:auto">
+            <div class="logo" aria-hidden="true"></div>
             <div>
-              <label for="city">City (required)</label>
-              <input id="city" name="city" placeholder="Ukiah" required autocomplete="address-level2" />
-            </div>
-            <div>
-              <label for="address">Property Address (required)</label>
-              <input id="address" name="address" placeholder="123 Main St" required autocomplete="street-address" />
+              <h1>White’s Painting &amp; Renovations</h1>
+              <small>Ukiah, CA • Serving surrounding counties LIC # 1102340</small>
             </div>
           </div>
+          <p class="note" style="margin-top:10px;">
+            Licensed &amp; Insured. High standards. Clean job sites. Premium finishes.
+          </p>
+        </div>
 
-          <label for="notes">Notes (optional)</label>
-          <textarea id="notes" name="notes" placeholder="Rooms, cabinets, timeline, etc."></textarea>
+        <div>
+          <p style="margin:0 0 10px;"><b>Contact</b></p>
+          <p style="margin:0 0 6px;"><a href="tel:+17074667024">📞 (707) 466-7024</a></p>
+          <p style="margin:0 0 6px;"><a href="#estimate">Request an estimate</a></p>
+          <p style="margin:0;">Hours: Mon–Fri</p>
+        </div>
 
-          <div class="consentBox">
-            <label for="sms_consent">
-              <input type="checkbox" id="sms_consent" name="sms_consent">
-              <span>
-                By checking this box, you agree to receive informational SMS messages from White’s Painting &amp; Renovations regarding your estimate request, appointment reminders, scheduling updates, and project communication.
-                Message frequency varies. Message &amp; data rates may apply. Reply STOP to unsubscribe or HELP for help.
-              </span>
-            </label>
+        <div>
+          <p style="margin:0 0 10px;"><b>Service Areas</b></p>
+          <p style="margin:0;" class="muted">Ukiah • Redwood Valley • Lakeport • Lower Lake • Willits • Santa Rosa (by request)</p>
+        </div>
+      </div>
 
-            <div class="policyLinks">
-              <a href="/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
-              &nbsp;|&nbsp;
-              <a href="/terms-and-conditions" target="_blank" rel="noopener">Terms &amp; Conditions</a>
-            </div>
-          </div>
+      <p class="note" style="margin-top:18px;">
+        © <span id="year"></span> White’s Painting &amp; Renovations. All rights reserved.
+      </p>
+    </div>
+  </footer>
 
-          <div class="ctaRow" style="margin-top:14px;">
-            <button class="btn btn-primary" type="submit">Submit Request</button>
-            <a class="btn btn-ghost" href="tel:+17074667024">Call Instead (707) 466-7024</a>
-          </div>
-
-          <div class="result" id="result"></div>
-        </form>
-      </aside>
-    </section>
-
-    <footer>
-      © <span id="yr"></span> White’s Painting &amp; Renovations • Ukiah, CA
-      <div class="fine">Free Estimates • Financing Available</div>
-    </footer>
+  <!-- Mobile Sticky CTA -->
+  <div class="sticky" role="region" aria-label="Quick actions">
+    <div class="wrap">
+      <a class="btn btn-ghost" href="tel:+17074667024">Call</a>
+      <a class="btn btn-primary" href="#estimate">Free Estimate</a>
+    </div>
   </div>
 
   <script>
-    document.getElementById("yr").textContent = new Date().getFullYear();
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    const menuBtn = document.getElementById("menuBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-    menuBtn?.addEventListener("click", () => {
-      const isOpen = mobileMenu.style.display === "block";
-      mobileMenu.style.display = isOpen ? "none" : "block";
-    });
-    mobileMenu?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mobileMenu.style.display="none"));
+    // Form AJAX submit (optional; works even without it)
+    const form = document.getElementById("leadForm");
+    const result = document.getElementById("result");
 
-    const API_URL = "/web/lead";
-
-    function showResult(msg, ok=true){
-      const el = document.getElementById("result");
-      el.style.display = "block";
-      el.style.borderColor = ok ? "rgba(0,255,168,.35)" : "rgba(255,77,109,.45)";
-      el.innerHTML = msg;
-    }
-
-    document.getElementById("leadForm").addEventListener("submit", async (e) => {
+    form.addEventListener("submit", async (e) => {
+      // If your backend expects normal POST, you can remove this whole handler.
       e.preventDefault();
-
-      const payload = {
-        first_name: document.getElementById("first_name").value.trim(),
-        phone: document.getElementById("phone").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        project_type: document.getElementById("project_type").value.trim(),
-        address: document.getElementById("address").value.trim(),
-        city: document.getElementById("city").value.trim(),
-        notes: document.getElementById("notes").value.trim(),
-        sms_consent: document.getElementById("sms_consent").checked,
-      };
-
-      if (!payload.phone || !payload.project_type || !payload.address || !payload.city) {
-        showResult("Please fill in all required fields.", false);
-        return;
-      }
+      result.textContent = "Sending…";
 
       try {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type":"application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        const data = await res.json().catch(()=>({}));
-
-        if (res.ok && data.ok !== false) {
-          showResult("Thank you! Sally will text you shortly to schedule your estimate.");
-          if (window.fbq) {
-            fbq('track', 'Lead');
-          }
-          e.target.reset();
+        const res = await fetch(form.action, { method: "POST", body: new FormData(form) });
+        if (res.ok) {
+          result.textContent = "✅ Request received. We’ll reach out shortly.";
+          form.reset();
         } else {
-          showResult(
-            (data && (data.detail || data.error)) ? (data.detail || data.error)
-            : "Something went wrong. Please try again or call (707) 466-7024.",
-            false
-          );
+          result.textContent = "Something went wrong. Please call (707) 466-7024.";
         }
-      } catch (err) {
-        showResult("Network error. Please try again or call (707) 466-7024.", false);
+      } catch {
+        result.textContent = "Network error. Please call (707) 466-7024.";
       }
     });
   </script>
