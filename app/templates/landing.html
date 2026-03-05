@@ -389,7 +389,7 @@
     .reviews{
       display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px;
     }
-    .stars{letter-spacing:2px; color: rgba(255,255,255,.92); font-size: 14px;}
+    .stars{letter-spacing:0.2px; color: rgba(255,255,255,.92); font-size: 14px;}
     details{
       border:1px solid rgba(255,255,255,.12);
       border-radius: 18px;
@@ -520,7 +520,8 @@
             <span class="pill" style="padding:8px 12px;">✨ Premium Finish</span>
           </div>
 
-          <form id="leadForm" action="/lead" method="post">
+          <!-- FIX: point to your real FastAPI endpoint and send JSON via JS -->
+          <form id="leadForm" action="/web/lead" method="post">
             <div class="two">
               <div class="field">
                 <label for="first_name">First name</label>
@@ -545,12 +546,18 @@
 
             <div class="field">
               <label for="address">Project address</label>
-              <input id="address" name="address" placeholder="123 Main St, Ukiah, CA" autocomplete="street-address" />
+              <input id="address" name="address" placeholder="123 Main St, Ukiah, CA" autocomplete="street-address" required />
+            </div>
+
+            <!-- ADD: City required by backend -->
+            <div class="field">
+              <label for="city">City</label>
+              <input id="city" name="city" placeholder="Ukiah" autocomplete="address-level2" required />
             </div>
 
             <div class="field">
               <label for="service">Service</label>
-              <select id="service" name="service">
+              <select id="service" name="service" required>
                 <option>Interior Painting</option>
                 <option>Exterior Painting</option>
                 <option>Cabinet Painting</option>
@@ -747,7 +754,7 @@
     </div>
   </section>
 
-  <!-- Reviews -->
+  <!-- Reviews (kept your exact edits) -->
   <section id="reviews">
     <div class="wrap">
       <div class="section-title">
@@ -768,8 +775,7 @@
         <div class="card">
           <div class="stars">Rand Martin ★★★★★</div>
           <h4 style="margin-top:10px;">“The prep work showed.”</h4>
-          <p>I can't heap enough praise on Nathon and his team. The job they did painting the exterior of our house in Lakeport was in all ways first rate. The prep work on our 60 year old house that hadn't been touched in decades was meticulous, from repairing extensive dry rot to seamlessly patching holes where a kerosene heater had been removed (and removing the heater itself!). They even rebuilt a decrepit shed that was affixed to the side of the house. The painting itself, base and trim, was precise and flawless. And done in 7 days and at a price that was exceptionally fair and reasonable. In every respect, they went above and beyond. In the biggest testimonial to White's Painting, I have already committed to Nathon that he will be my only call when we are ready to paint our interior in a year.
-</p>
+          <p>I can't heap enough praise on Nathon and his team. The job they did painting the exterior of our house in Lakeport was in all ways first rate. The prep work on our 60 year old house that hadn't been touched in decades was meticulous, from repairing extensive dry rot to seamlessly patching holes where a kerosene heater had been removed (and removing the heater itself!). They even rebuilt a decrepit shed that was affixed to the side of the house. The painting itself, base and trim, was precise and flawless. And done in 7 days and at a price that was exceptionally fair and reasonable. In every respect, they went above and beyond. In the biggest testimonial to White's Painting, I have already committed to Nathon that he will be my only call when we are ready to paint our interior in a year.</p>
           <p class="note" style="margin-top:10px;">— Lakeport CA</p>
         </div>
         <div class="card">
@@ -862,24 +868,46 @@ The finished result is the same outcome as the beginning process. They protected
     // Year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Form AJAX submit (optional; works even without it)
+    // Submit as JSON to match FastAPI /web/lead (payload: dict)
     const form = document.getElementById("leadForm");
     const result = document.getElementById("result");
 
     form.addEventListener("submit", async (e) => {
-      // If your backend expects normal POST, you can remove this whole handler.
       e.preventDefault();
       result.textContent = "Sending…";
 
+      const fd = new FormData(form);
+
+      const payload = {
+        first_name: (fd.get("first_name") || "").toString().trim(),
+        // keep your last name field in the form, but backend doesn't require it (and will ignore if not used)
+        last_name: (fd.get("last_name") || "").toString().trim(),
+        phone: (fd.get("phone") || "").toString().trim(),
+        email: (fd.get("email") || "").toString().trim(),
+        project_type: (fd.get("service") || "").toString().trim(),
+        address: (fd.get("address") || "").toString().trim(),
+        city: (fd.get("city") || "").toString().trim(),
+        notes: (fd.get("message") || "").toString().trim(),
+        sms_consent: fd.get("consent") === "yes",
+      };
+
       try {
-        const res = await fetch(form.action, { method: "POST", body: new FormData(form) });
+        const res = await fetch(form.action, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
         if (res.ok) {
           result.textContent = "✅ Request received. We’ll reach out shortly.";
           form.reset();
         } else {
+          const text = await res.text();
+          console.error("Lead error:", res.status, text);
           result.textContent = "Something went wrong. Please call (707) 466-7024.";
         }
-      } catch {
+      } catch (err) {
+        console.error(err);
         result.textContent = "Network error. Please call (707) 466-7024.";
       }
     });
